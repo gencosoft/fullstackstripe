@@ -11,9 +11,10 @@
       </div>
       <br />
       <v-btn
+        dark
         :loading="isLoading"
         block
-        color="primary"
+        color="deep-purple accent-2"
         id="submit"
         @click="paymentHandler"
         >Pay</v-btn

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <br />
-    <v-btn large color="primary" @click="handleCheckout">PAY</v-btn>
+    <v-btn dark large color="deep-purple accent-2" @click="handleCheckout">PAY</v-btn>
   </v-container>
 </template>
 
