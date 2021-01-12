@@ -24,11 +24,11 @@
       <v-spacer></v-spacer>
 
       <v-btn to="/prebuiltcheckout" target="_self" text>
-        <span class="">Prebuilt Checkout</span>
+        <span class="">Prebuilt Checkout Flow</span>
       </v-btn>
 
       <v-btn to="/customflow" target="_self" text>
-        <span class="mr-2">Custom Payment Flow</span>
+        <span class="mr-2">Custom Flow</span>
       </v-btn>
     </v-app-bar>
 
