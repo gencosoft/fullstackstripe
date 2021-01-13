@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="deep-purple accent-2" dark>
+    <v-app-bar app color="#6772e5" dark>
 
       <v-spacer></v-spacer>
 

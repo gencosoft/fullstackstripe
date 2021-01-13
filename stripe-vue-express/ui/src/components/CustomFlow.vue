@@ -14,9 +14,9 @@
         dark
         :loading="isLoading"
         block
-        color="deep-purple accent-2"
+        color="#6772e5"
         id="submit"
-        @click="paymentHandler"
+        @click="handlePayment"
         >Pay</v-btn
       >
     </form>
@@ -35,33 +35,41 @@ export default {
     };
   },
   mounted() {
-    this.axios
-      .post("http://localhost:3000/create-payment-intent")
-      .then((response) => {
-        this.clientSecret = response.data.clientSecret;
-        this.stripe = window.Stripe(
-          "pk_test_51I7c7BDHwX5RTLC4wFAHLF4OHXBZO1NvhjADh90QmHW98WPleWg4evwc9TEMvPm3TQzj3TrVOuDdfxZxMxLcGHKX00BQxMTA93"
-        );
-        // Set up Stripe.js and Elements to use in checkout form
-        var elements = this.stripe.elements();
-        var style = {
-          base: {
-            color: "#32325d",
-          },
-        };
-        this.card = elements.create("card", { style: style });
-        this.card.mount("#card-element");
-        this.card.on("change", ({ error }) => {
-          if (error) {
-            this.cardErrors = error.message;
-          } else {
-            this.cardErrors = "";
-          }
-        });
-      });
+    this.createPaymentIntent();
+    this.createStripeElements();
   },
   methods: {
-    paymentHandler() {
+    createPaymentIntent() { // TODO : proceed to checkout ile ilerlendiğinde çağrılmalı bu komponente props olarak verilmeli
+      this.axios
+        .post("http://localhost:3000/create-payment-intent")
+        .then((response) => {
+          this.clientSecret = response.data.clientSecret;
+        })
+        .catch((err) =>{
+          console.log("An error occured while creating a payment intent. Error Message : " + err);
+        });
+    },
+    createStripeElements() {
+      this.stripe = window.Stripe(
+        "pk_test_51I7c7BDHwX5RTLC4wFAHLF4OHXBZO1NvhjADh90QmHW98WPleWg4evwc9TEMvPm3TQzj3TrVOuDdfxZxMxLcGHKX00BQxMTA93"
+      );
+      var elements = this.stripe.elements();
+      var style = {
+        base: {
+          color: "#32325d",
+        },
+      };
+      this.card = elements.create("card", { style: style });
+      this.card.mount("#card-element");
+      this.card.on("change", ({ error }) => {
+        if (error) {
+          this.cardErrors = error.message;
+        } else {
+          this.cardErrors = "";
+        }
+      });
+    },
+    handlePayment() {
       this.isLoading = true;
       this.stripe
         .confirmCardPayment(this.clientSecret, {

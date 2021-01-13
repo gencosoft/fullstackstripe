@@ -5,11 +5,10 @@
       :loading="isLoading"
       dark
       large
-      color="deep-purple accent-2"
+      color="#6772e5"
       @click="handleCheckout"
       >PAY</v-btn
     >
-  </v-container>
 </template>
 
 <script>
@@ -31,22 +30,18 @@ export default {
       // created in step 3.
       this.axios
         .post("http://localhost:3000/create-checkout-session")
-        .then(function (response) {
+        .then((response) => {
           console.log("response is " + JSON.stringify(response.data.id));
           session_id = response.data.id;
-          return stripe.redirectToCheckout({
-            sessionId: session_id,
-          });
         })
-        .then(function (session) {
+        .then((session) => {
           console.log("your session " + JSON.stringify(session));
-
           this.isLoading = false;
           return stripe.redirectToCheckout({
             sessionId: session_id,
           });
         })
-        .then(function (result) {
+        .then((result) => {
           // If `redirectToCheckout` fails due to a browser or network
           // error, you should display the localized error message to your
           // customer using `error.message`.
@@ -54,7 +49,7 @@ export default {
             alert(result.error.message);
           }
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.error("Error:", error);
           this.isLoading = false;
         });
