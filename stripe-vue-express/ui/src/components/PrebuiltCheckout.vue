@@ -9,6 +9,7 @@
       @click="handleCheckout"
       >PAY</v-btn
     >
+  </v-container>
 </template>
 
 <script>
