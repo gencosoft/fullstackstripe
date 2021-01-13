@@ -5,7 +5,7 @@ var cors = require("cors");
 // Set your secret key. Remember to switch to your live secret key in production!
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 const Stripe = require("stripe");
-const stripe = Stripe("sk_test_51I7c7BDHwX5RTLC4dWbTaqJBvBjN0XrjE21D1vbqmzwVEyVhwa3hcNiNukb4xWYfvcSOwU1ZoV8TzYDmT8a6FQz500EinWwVGJ");
+const stripe = Stripe("sk_test_XXX");
 
 app.use(cors());
 app.use(express.json());

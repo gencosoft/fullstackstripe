@@ -1,17 +1,27 @@
 <template>
   <v-container>
     <br />
-    <v-btn dark large color="deep-purple accent-2" @click="handleCheckout">PAY</v-btn>
+    <v-btn
+      :loading="isLoading"
+      dark
+      large
+      color="deep-purple accent-2"
+      @click="handleCheckout"
+      >PAY</v-btn
+    >
   </v-container>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      isLoading: false,
+    };
   },
   methods: {
     handleCheckout() {
+      this.isLoading = true;
       var stripe = window.Stripe(
         "pk_test_51I7c7BDHwX5RTLC4wFAHLF4OHXBZO1NvhjADh90QmHW98WPleWg4evwc9TEMvPm3TQzj3TrVOuDdfxZxMxLcGHKX00BQxMTA93"
       );
@@ -30,6 +40,8 @@ export default {
         })
         .then(function (session) {
           console.log("your session " + JSON.stringify(session));
+
+          this.isLoading = false;
           return stripe.redirectToCheckout({
             sessionId: session_id,
           });
@@ -44,6 +56,7 @@ export default {
         })
         .catch(function (error) {
           console.error("Error:", error);
+          this.isLoading = false;
         });
     },
   },
