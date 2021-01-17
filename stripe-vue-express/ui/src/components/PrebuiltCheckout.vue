@@ -1,25 +1,42 @@
 <template>
   <v-container>
+    <h1 style="color: #41b782">PREBUILT CHECKOUT PAGE</h1>
+    <br />
+    <Product @quantityChanged="quantityChanged"></Product>
     <br />
     <v-btn
+      class="white--text"
+      :disabled="product.quantity === 0"
       :loading="isLoading"
-      dark
       large
-      color="#6772e5"
+      color="#41b782"
       @click="handleCheckout"
-      >PAY</v-btn
+      >Proceed to Checkout <v-icon> mdi-cart-arrow-right </v-icon></v-btn
     >
   </v-container>
 </template>
 
 <script>
+import Product from "@/components/Product.vue";
 export default {
+  components: {
+    Product,
+  },
   data() {
     return {
       isLoading: false,
+      product: {
+        name: "",
+        image: "",
+        quantity: 0,
+        amount: null,
+      },
     };
   },
   methods: {
+    quantityChanged(data) {
+      this.product = data;
+    },
     handleCheckout() {
       this.isLoading = true;
       var stripe = window.Stripe(
@@ -30,19 +47,19 @@ export default {
       // Create a new Checkout Session using the server-side endpoint you
       // created in step 3.
       this.axios
-        .post("http://localhost:3000/create-checkout-session")
+        .post("http://localhost:3000/create-checkout-session", this.product)
         .then((response) => {
           console.log("response is " + JSON.stringify(response.data.id));
           session_id = response.data.id;
         })
         .then((session) => {
           console.log("your session " + JSON.stringify(session));
-          this.isLoading = false;
           return stripe.redirectToCheckout({
             sessionId: session_id,
           });
         })
         .then((result) => {
+          this.isLoading = false;
           // If `redirectToCheckout` fails due to a browser or network
           // error, you should display the localized error message to your
           // customer using `error.message`.

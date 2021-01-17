@@ -2,48 +2,39 @@ const express = require("express");
 const app = express();
 const port = 3000;
 var cors = require("cors");
-// Set your secret key. Remember to switch to your live secret key in production!
-// See your keys here: https://dashboard.stripe.com/account/apikeys
+
+// Remember to switch to live secret key in production!
 const Stripe = require("stripe");
 const stripe = Stripe("sk_test_XXX");
 
 app.use(cors());
 app.use(express.json());
 
-const calculateOrderAmount = (items) => {
+const calculateOrderAmount = (amount) => {
   // Replace this constant with a calculation of the order's amount
   // Calculate the order total on the server to prevent
   // people from directly manipulating the amount on the client
-  return 1400;
+  return amount * 100;
 };
 
-app.get("/", async (req, res) => {
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 1000,
-    currency: "usd",
-    payment_method_types: ["card"],
-    receipt_email: "mrgenco@gmail.com",
-  });
-  res.status(200).send(paymentIntent);
-});
-
 app.post("/create-payment-intent", async (req, res) => {
-
   try {
-    const { items } = req.body;
+    console.log(JSON.stringify(req.body));
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: calculateOrderAmount(items),
+      amount: calculateOrderAmount(req.body.amount),
       currency: "usd",
-      // TODO payment_method_types: ["card"] ?
+      payment_method_types: ["card"],
     });
-    res.send({ clientSecret: paymentIntent.client_secret });
+    console.log("✅ Payment Intent created.");
+    res.status(200).send({ clientSecret: paymentIntent.client_secret });
   } catch (err) {
     console.error("An error occured while creating the payment intent." + err);
-    res.status(500).send("An error occured while creating the payment intent" + err);
+    res
+      .status(500)
+      .send("An error occured while creating the payment intent" + err);
   }
 });
-
 app.post("/create-checkout-session", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -53,26 +44,28 @@ app.post("/create-checkout-session", async (req, res) => {
           price_data: {
             currency: "usd",
             product_data: {
-              name: "T-shirt",
+              name: req.body.name,
+              images: [req.body.image],
             },
-            unit_amount: 2000,
+            unit_amount: calculateOrderAmount(req.body.amount),
           },
-          quantity: 1,
+          quantity: req.body.quantity,
         },
       ],
       mode: "payment",
       success_url: "http://localhost:8080/#/success",
       cancel_url: "http://localhost:8080/#/error",
     });
-
+    console.log("✅ Checkout Session Created.");
     res.send({ id: session.id });
   } catch (err) {
     console.error("An error occured while creating the checkout form" + err);
-    res.status(500).send("An error occured while creating the checkout form" + err);
+    res
+      .status(500)
+      .send("An error occured while creating the checkout form" + err);
   }
-
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`✅ API is up and running at http://localhost:${port}`);
 });

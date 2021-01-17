@@ -1,52 +1,141 @@
 <template>
   <v-container>
-    <form id="payment-form">
-      <div id="card-element">
-        <!-- Elements will create input elements here -->
-      </div>
-
-      <!-- We'll put the error messages in this element -->
-      <div id="card-errors" role="alert">
-        {{ cardErrors }}
-      </div>
-      <br />
-      <v-btn
-        dark
-        :loading="isLoading"
-        block
-        color="#6772e5"
-        id="submit"
-        @click="handlePayment"
-        >Pay</v-btn
+    <v-row align="center" justify="center">
+      <v-col v-if="!paymentIntentCreated">
+        <h1 style="color: #41b782">CUSTOM FLOW PAGE</h1>
+        <br />
+        <Product @quantityChanged="quantityChanged"></Product>
+        <br />
+        <v-btn
+          v-if="!paymentIntentCreated"
+          class="white--text"
+          :disabled="product.quantity === 0"
+          :loading="checkoutLoading"
+          large
+          color="#41b782"
+          @click="handleCheckout()"
+        >
+          Proceed to Checkout
+          <v-icon> mdi-cart-arrow-right </v-icon></v-btn
+        ></v-col
       >
-    </form>
+      <v-col v-show="paymentIntentCreated">
+        <h1 style="color: #41b782">{{ product.name }}</h1>
+        <h2 style="color: #41b782">
+          Total cost : ${{ product.amount * product.quantity }}
+        </h2>
+        <h3 style="color: #41b782">
+          Quantity : {{ product.quantity }}. You will pay ${{ product.amount }}
+          for each product
+        </h3>
+
+        <form id="payment-form">
+          <v-text-field
+            v-show="paymentIntentCreated"
+            solo
+            clearable
+            hint="Enter Email Address"
+            label="Enter Email Address"
+            v-model="email"
+          ></v-text-field>
+          <v-text-field
+            solo
+            clearable
+            v-show="paymentIntentCreated"
+            label="Enter Full Name"
+            hint="Enter Full Name"
+            v-model="fullname"
+          ></v-text-field>
+          <div id="card-element">
+            <!-- Elements will create input elements here -->
+          </div>
+
+          <!-- We'll put the error messages in this element -->
+          <div id="card-errors" role="alert">
+            {{ cardErrors }}
+          </div>
+          <br />
+          <v-btn
+            dark
+            :loading="isLoading"
+            block
+            color="#41b782"
+            id="submit"
+            @click="handlePayment"
+            >Pay</v-btn
+          >
+          <br />
+          <p v-if="cardErrorMessage.length > 0">{{ cardErrorMessage }}</p>
+          <p v-if="paymentsucceed">
+            Payment succeeded, see the result in your
+            <a :href="stripelink" target="_blank">Stripe dashboard.</a> Refresh
+            the page to pay again.
+          </p>
+        </form></v-col
+      >
+    </v-row>
   </v-container>
 </template>
 
 <script>
+import Product from "@/components/Product.vue";
 export default {
+  components: {
+    Product,
+  },
   data() {
     return {
+      // Payment intent
       clientSecret: null,
+      paymentIntentCreated: false,
+
+      // Stripe elements
       cardErrors: "",
       card: null,
       stripe: null,
+
+      // Loading buttons
       isLoading: false,
+      checkoutLoading: false,
+
+      // Product info
+      product: {
+        name: "",
+        image: "",
+        quantity: 0,
+        amount: null,
+      },
+      // Customer info
+      email: "",
+      fullname: "",
+
+      // After payment messages
+      cardErrorMessage: "",
+      paymentsucceed: false,
+      stripelink: "",
     };
   },
-  mounted() {
-    this.createPaymentIntent();
-    this.createStripeElements();
-  },
   methods: {
-    createPaymentIntent() { // TODO : proceed to checkout ile ilerlendiğinde çağrılmalı bu komponente props olarak verilmeli
+    handleCheckout() {
+      this.checkoutLoading = true;
+      this.createPaymentIntent();
+      this.createStripeElements();
+    },
+    quantityChanged(data) {
+      this.product = data;
+    },
+    createPaymentIntent() {
       this.axios
-        .post("http://localhost:3000/create-payment-intent")
+        .post("http://localhost:3000/create-payment-intent", this.product)
         .then((response) => {
           this.clientSecret = response.data.clientSecret;
+          this.paymentIntentCreated = true;
         })
-        .catch((err) =>{
-          console.log("An error occured while creating a payment intent. Error Message : " + err);
+        .catch((err) => {
+          console.log(
+            "An error occured while creating a payment intent. Error Message : " +
+              err
+          );
         });
     },
     createStripeElements() {
@@ -73,24 +162,29 @@ export default {
       this.isLoading = true;
       this.stripe
         .confirmCardPayment(this.clientSecret, {
+          receipt_email: this.email,
           payment_method: {
             card: this.card,
             billing_details: {
-              name: "Jenny Rosen",
+              name: this.fullname,
             },
           },
         })
         .then((result) => {
           if (result.error) {
-            // Show error to your customer (e.g., insufficient funds)
+            // Show error to your customer
             console.log(result.error.message);
+            this.cardError = result.error.message;
             this.isLoading = false;
           } else {
             // The payment has been processed!
             if (result.paymentIntent.status === "succeeded") {
               console.log("payment success");
               this.isLoading = false;
-              // Show a success message to your customer
+              this.paymentsucceed = true;
+              this.stripelink =
+                "https://dashboard.stripe.com/test/payments/" +
+                result.paymentIntent.id;
               // There's a risk of the customer closing the window before callback
               // execution. Set up a webhook or plugin to listen for the
               // payment_intent.succeeded event that handles any business critical
