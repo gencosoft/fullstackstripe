@@ -1,18 +1,17 @@
 <template>
   <v-container fill-height fluid class="justify-center align-center">
-    <h2 class="teal--text darken-1">CUSTOM FLOW PAGE</h2>
-    <CustomFlow />
+    <Subscription />
   </v-container>
 </template>
 
 <script>
 // @ is an alias to /src
-import CustomFlow from "@/components/CustomFlow.vue";
+import Subscription from "@/components/Subscription.vue";
 
 export default {
-  name: "CustomFlowPage",
+  name: "SubscriptionPage",
   components: {
-    CustomFlow,
+    Subscription,
   },
 };
 </script>

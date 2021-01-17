@@ -5,6 +5,7 @@ import SuccessPage from "../views/SuccessPage.vue";
 import ErrorPage from "../views/ErrorPage.vue";
 import PrebuiltCheckoutPage from "../views/PrebuiltCheckoutPage.vue";
 import CustomFlowPage from "../views/CustomFlowPage.vue";
+import SubscriptionPage from "../views/SubscriptionPage.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -32,6 +33,11 @@ const routes = [
     path: "/customflow",
     name: "CustomFlowPage",
     component: CustomFlowPage,
+  },
+  {
+    path: "/subscription",
+    name: "SubscriptionPage",
+    component: SubscriptionPage,
   },
   {
     path: "/about",

@@ -2,12 +2,12 @@
   <v-card class="mx-auto" max-width="400">
     <v-img class="success--text align-end" height="200px" :src="product.image">
     </v-img>
-    <v-card-title class="success--text">
+    <v-card-title class="teal--text darken-1">
       {{ product.name }}
       <br />
       Unpaired gray nike running shoe
     </v-card-title>
-    <v-card-subtitle class="success--text">
+    <v-card-subtitle class="teal--text darken-1">
       Amount : $ {{ product.amount }}
     </v-card-subtitle>
 
@@ -16,7 +16,7 @@
         class="white--text"
         :disabled="product.quantity === 0"
         elevation="2"
-        color="#41b782"
+        color="teal darken-1"
         @click="decrementQuantity()"
       >
         <v-icon dark> mdi-minus </v-icon>
@@ -25,7 +25,11 @@
 
       <h3 style="color: #41b782">{{ product.quantity }}</h3>
       <v-spacer></v-spacer>
-      <v-btn class="white--text" color="#41b782" @click="incrementQuantity()">
+      <v-btn
+        class="white--text"
+        color="teal darken-1"
+        @click="incrementQuantity()"
+      >
         <v-icon dark> mdi-plus </v-icon>
       </v-btn>
     </v-card-actions>

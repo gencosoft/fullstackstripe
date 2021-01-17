@@ -1,87 +1,63 @@
 <template>
-  <v-container fill-height fluid>
+  <v-container>
     <v-row align="center" justify="center">
-      <v-col v-if="!paymentIntentCreated">
-        <Product @quantityChanged="quantityChanged"></Product>
+      <v-col>
+        <v-hover v-slot="{ hover }">
+          <v-card :elevation="hover ? 16 : 2" width="300" max-width="400">
+            <v-card-title class="teal--text darken-1">
+              Basic $5.00
+            </v-card-title>
+            <v-card-subtitle class="teal--text darken-1">
+              <p class="teal--text darken-1">Per month</p>
+              <p class="teal--text darken-1">Billed monthly</p>
+            </v-card-subtitle>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn dark large color="teal darken-1">Select</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-hover>
       </v-col>
       <v-col>
-        <v-btn
-          v-if="!paymentIntentCreated"
-          class="white--text"
-          :disabled="product.quantity === 0"
-          :loading="checkoutLoading"
-          x-large
-          color="teal darken-1"
-          @click="handleCheckout()"
-        >
-          Proceed to Checkout
-          <v-icon> mdi-cart-arrow-right </v-icon></v-btn
+        <v-hover v-slot="{ hover }">
+          <v-card :elevation="hover ? 16 : 2" width="300" max-width="400">
+            <v-card-title class="teal--text darken-1">
+              Premium $25.00
+            </v-card-title>
+            <v-card-subtitle class="teal--text darken-1">
+              <p class="teal--text darken-1">Per month</p>
+              <p class="teal--text darken-1">Billed monthly</p>
+            </v-card-subtitle>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn dark large color="teal darken-1">Select</v-btn>
+            </v-card-actions>
+          </v-card></v-hover
         ></v-col
       >
-      <v-col v-show="paymentIntentCreated">
-        <h1 style="color: #41b782">{{ product.name }}</h1>
-        <h2 style="color: #41b782">
-          Total cost : ${{ product.amount * product.quantity }}
-        </h2>
-        <h3 style="color: #41b782">
-          Quantity : {{ product.quantity }}. You will pay ${{ product.amount }}
-          for each product
-        </h3>
-
-        <form id="payment-form">
-          <v-text-field
-            v-show="paymentIntentCreated"
-            solo
-            clearable
-            hint="Enter Email Address"
-            label="Enter Email Address"
-            v-model="email"
-          ></v-text-field>
-          <v-text-field
-            solo
-            clearable
-            v-show="paymentIntentCreated"
-            label="Enter Full Name"
-            hint="Enter Full Name"
-            v-model="fullname"
-          ></v-text-field>
-          <div id="card-element">
-            <!-- Elements will create input elements here -->
-          </div>
-
-          <!-- We'll put the error messages in this element -->
-          <div id="card-errors" role="alert">
-            {{ cardErrors }}
-          </div>
-          <br />
-          <v-btn
-            dark
-            :loading="isLoading"
-            block
-            color="#41b782"
-            id="submit"
-            @click="handlePayment"
-            >Pay</v-btn
-          >
-          <br />
-          <p v-if="cardErrorMessage.length > 0">{{ cardErrorMessage }}</p>
-          <p v-if="paymentsucceed">
-            Payment succeeded, see the result in your
-            <a :href="stripelink" target="_blank">Stripe dashboard.</a> Refresh
-            the page to pay again.
-          </p>
-        </form></v-col
+      <v-col
+        ><v-hover v-slot="{ hover }">
+          <v-card :elevation="hover ? 16 : 2" width="300" max-width="400">
+            <v-card-title class="teal--text darken-1">
+              Enterprise $100.00
+            </v-card-title>
+            <v-card-subtitle class="teal--text darken-1">
+              <p class="teal--text darken-1">Per month</p>
+              <p class="teal--text darken-1">Billed monthly</p>
+            </v-card-subtitle>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn dark large color="teal darken-1">Select</v-btn>
+            </v-card-actions>
+          </v-card></v-hover
+        ></v-col
       >
     </v-row>
   </v-container>
 </template>
 
 <script>
-import Product from "@/components/Product.vue";
 export default {
-  components: {
-    Product,
-  },
   data() {
     return {
       // Payment intent

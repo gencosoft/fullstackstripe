@@ -1,18 +1,20 @@
 <template>
-  <v-container>
-    <h1 style="color: #41b782">PREBUILT CHECKOUT PAGE</h1>
-    <br />
-    <Product @quantityChanged="quantityChanged"></Product>
-    <br />
-    <v-btn
-      class="white--text"
-      :disabled="product.quantity === 0"
-      :loading="isLoading"
-      large
-      color="#41b782"
-      @click="handleCheckout"
-      >Proceed to Checkout <v-icon> mdi-cart-arrow-right </v-icon></v-btn
-    >
+  <v-container fill-height fluid>
+    <v-row align="center" justify="center">
+      <v-col><Product @quantityChanged="quantityChanged"></Product></v-col>
+
+      <v-col>
+        <v-btn
+          class="white--text"
+          :disabled="product.quantity === 0"
+          :loading="isLoading"
+          large
+          color="teal darken-1"
+          @click="handleCheckout"
+          >Proceed to Checkout <v-icon> mdi-cart-arrow-right </v-icon></v-btn
+        ></v-col
+      >
+    </v-row>
   </v-container>
 </template>
 

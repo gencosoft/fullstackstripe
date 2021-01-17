@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="#41b782" dark>
+    <v-app-bar app color="teal darken-1" dark>
       <v-spacer></v-spacer>
 
       <v-btn to="/prebuiltcheckout" target="_self" text>
@@ -21,7 +21,9 @@
       </v-btn>
     </v-app-bar>
 
-    <v-main> <router-view></router-view> </v-main>
+    <v-main>
+      <transition name="fade"><router-view></router-view></transition>
+    </v-main>
   </v-app>
 </template>
 
