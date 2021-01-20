@@ -12,4 +12,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  gotoDashboard(){
+    // window.open('https://stripe.com/');
+    window.location.href = 'https://stripe.com/';
+  }
 }
