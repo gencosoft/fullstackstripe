@@ -1,34 +1,34 @@
 <template>
   <v-card elevation="8" class="mx-auto" width="500" max-width="600">
-    <v-img class="success--text align-end" height="500px" :src="product.image">
-    </v-img>
-    <v-card-title style="color: #41b782">
+    <v-img height="500px" :src="product.image"> </v-img>
+    <v-card-title style="color: teal">
       {{ product.name }}
       <v-spacer></v-spacer>
-      Total Price : $ {{ product.amount * product.quantity }}
+      Total Price : ${{ product.amount * product.quantity }}
     </v-card-title>
-    <v-card-subtitle style="color: #41b782">
+    <v-card-subtitle style="color: teal">
       {{ product.desc }}
+      <v-spacer> Single Item Price : ${{ product.amount }} </v-spacer>
     </v-card-subtitle>
 
     <v-card-actions>
       <v-btn
         class="white--text"
         :disabled="product.quantity === 0"
-        elevation="8"
-        color="#41b782"
+        elevation="4"
+        color="teal darken-1"
         @click="decrementQuantity()"
       >
         <v-icon dark> mdi-minus </v-icon>
       </v-btn>
       <v-spacer></v-spacer>
 
-      <h3 style="color: #41b782">{{ product.quantity }}</h3>
+      <h3 style="color: teal">{{ product.quantity }}</h3>
       <v-spacer></v-spacer>
       <v-btn
-        elevation="8"
+        elevation="4"
         class="white--text"
-        color="#41b782"
+        color="teal darken-1"
         @click="incrementQuantity()"
       >
         <v-icon dark> mdi-plus </v-icon>

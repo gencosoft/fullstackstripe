@@ -1,6 +1,5 @@
 <template>
   <v-container fill-height fluid class="justify-center align-center">
-    <h2 class="teal--text darken-1">PREBUILT CHECKOUT PAGE</h2>
     <PrebuiltCheckout />
   </v-container>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app flat color="#41b782" dark>
+    <v-app-bar app flat color="teal darken-1" dark>
       <v-spacer></v-spacer>
 
       <v-btn to="/prebuiltcheckout" target="_self" text>

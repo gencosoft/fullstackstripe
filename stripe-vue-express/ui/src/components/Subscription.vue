@@ -3,7 +3,7 @@
     <v-row align="center" justify="center">
       <v-col>
         <v-hover v-slot="{ hover }">
-          <v-card :elevation="hover ? 16 : 2" width="300" max-width="400">
+          <v-card :elevation="hover ? 16 : 2" width="500">
             <v-card-title class="teal--text darken-1">
               Basic $5.00
             </v-card-title>
@@ -13,14 +13,14 @@
             </v-card-subtitle>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn dark large color="teal darken-1">Select</v-btn>
+              <v-btn dark x-large color="teal darken-1">Select</v-btn>
             </v-card-actions>
           </v-card>
         </v-hover>
       </v-col>
       <v-col>
         <v-hover v-slot="{ hover }">
-          <v-card :elevation="hover ? 16 : 2" width="300" max-width="400">
+          <v-card :elevation="hover ? 16 : 2" width="500">
             <v-card-title class="teal--text darken-1">
               Premium $25.00
             </v-card-title>
@@ -30,14 +30,14 @@
             </v-card-subtitle>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn dark large color="teal darken-1">Select</v-btn>
+              <v-btn dark x-large color="teal darken-1">Select</v-btn>
             </v-card-actions>
           </v-card></v-hover
         ></v-col
       >
       <v-col
         ><v-hover v-slot="{ hover }">
-          <v-card :elevation="hover ? 16 : 2" width="300" max-width="400">
+          <v-card :elevation="hover ? 16 : 2" width="500" class="mx-auto">
             <v-card-title class="teal--text darken-1">
               Enterprise $100.00
             </v-card-title>
@@ -47,7 +47,7 @@
             </v-card-subtitle>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn dark large color="teal darken-1">Select</v-btn>
+              <v-btn dark x-large color="teal darken-1">Select</v-btn>
             </v-card-actions>
           </v-card></v-hover
         ></v-col

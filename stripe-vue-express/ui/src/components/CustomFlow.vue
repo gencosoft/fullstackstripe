@@ -16,9 +16,9 @@
           class="white--text"
           :disabled="product.quantity === 0"
           :loading="checkoutLoading"
-          large
+          x-large
           block
-          color="#41b782"
+          color="teal darken-1"
           @click="handleCheckout()"
         >
           Proceed to Checkout

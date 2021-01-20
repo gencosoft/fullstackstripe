@@ -1,6 +1,5 @@
 <template>
   <v-container fill-height fluid class="justify-center align-center">
-    <h2 class="teal--text darken-1">CUSTOM FLOW PAGE</h2>
     <CustomFlow />
   </v-container>
 </template>
