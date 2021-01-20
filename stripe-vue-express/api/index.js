@@ -26,10 +26,10 @@ app.post("/create-payment-intent", async (req, res) => {
       currency: "usd",
       payment_method_types: ["card"],
     });
-    console.log("✅ Payment Intent created.");
+    console.log("✔️  Payment Intent created.");
     res.status(200).send({ clientSecret: paymentIntent.client_secret });
   } catch (err) {
-    console.error("An error occured while creating the payment intent." + err);
+    console.error("❌ An error occured while creating the payment intent." + err);
     res
       .status(500)
       .send("An error occured while creating the payment intent" + err);
@@ -56,10 +56,10 @@ app.post("/create-checkout-session", async (req, res) => {
       success_url: "http://localhost:8080/#/success",
       cancel_url: "http://localhost:8080/#/error",
     });
-    console.log("✅ Checkout Session Created.");
+    console.log("✔️  Checkout Session Created.");
     res.send({ id: session.id });
   } catch (err) {
-    console.error("An error occured while creating the checkout form" + err);
+    console.error("❌ An error occured while creating the checkout form" + err);
     res
       .status(500)
       .send("An error occured while creating the checkout form" + err);
@@ -67,5 +67,5 @@ app.post("/create-checkout-session", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`✅ API is up and running at http://localhost:${port}`);
+  console.log(`✔️  API is up and running at http://localhost:${port}`);
 });

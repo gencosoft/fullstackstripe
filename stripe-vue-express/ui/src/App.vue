@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="teal darken-1" dark>
+    <v-app-bar app flat color="#41b782" dark>
       <v-spacer></v-spacer>
 
       <v-btn to="/prebuiltcheckout" target="_self" text>
@@ -22,8 +22,9 @@
     </v-app-bar>
 
     <v-main>
-      <transition name="fade"><router-view></router-view></transition>
-    </v-main>
+      <v-slide-x-transition mode="in" hide-on-leave="true">
+        <router-view></router-view> </v-slide-x-transition
+    ></v-main>
   </v-app>
 </template>
 
@@ -41,3 +42,16 @@ export default {
   },
 };
 </script>
+<style>
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>
