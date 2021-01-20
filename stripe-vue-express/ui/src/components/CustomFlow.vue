@@ -2,8 +2,6 @@
   <v-container>
     <v-row align="center" justify="center">
       <v-col v-if="!paymentIntentCreated">
-        <h1 style="color: #41b782">CUSTOM FLOW PAGE</h1>
-        <br />
         <Product @quantityChanged="quantityChanged"></Product>
         <br />
         <v-btn
@@ -12,6 +10,7 @@
           :disabled="product.quantity === 0"
           :loading="checkoutLoading"
           large
+          block
           color="#41b782"
           @click="handleCheckout()"
         >

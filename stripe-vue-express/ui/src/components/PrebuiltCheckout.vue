@@ -1,7 +1,5 @@
 <template>
   <v-container>
-    <h1 style="color: #41b782">PREBUILT CHECKOUT PAGE</h1>
-    <br />
     <Product @quantityChanged="quantityChanged"></Product>
     <br />
     <v-btn
@@ -9,6 +7,7 @@
       :disabled="product.quantity === 0"
       :loading="isLoading"
       large
+      block
       color="#41b782"
       @click="handleCheckout"
       >Proceed to Checkout <v-icon> mdi-cart-arrow-right </v-icon></v-btn

@@ -1,14 +1,14 @@
 <template>
-  <v-card class="mx-auto" max-width="400">
+  <v-card class="mx-auto" width="500" max-width="600">
     <v-img class="success--text align-end" height="200px" :src="product.image">
     </v-img>
-    <v-card-title class="success--text">
+    <v-card-title style="color: #41b782">
       {{ product.name }}
-      <br />
-      Unpaired gray nike running shoe
+      <v-spacer></v-spacer>
+      Total Amount : $ {{ product.amount * product.quantity }}
     </v-card-title>
-    <v-card-subtitle class="success--text">
-      Amount : $ {{ product.amount }}
+    <v-card-subtitle style="color: #41b782">
+      Unpaired gray nike running shoe
     </v-card-subtitle>
 
     <v-card-actions>
