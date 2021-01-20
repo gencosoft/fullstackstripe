@@ -1,8 +1,15 @@
 <template>
   <v-container>
-    <Product @quantityChanged="quantityChanged"></Product>
+    <Product
+      @quantityChanged="quantityChanged"
+      productName="Running Shoe"
+      productDesc="Unpaired Nike Running Shoe"
+      productPrice="100"
+      productImage="https://images.unsplash.com/photo-1491553895911-0055eca6402d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit"
+    ></Product>
     <br />
     <v-btn
+      elevation="8"
       class="white--text"
       :disabled="product.quantity === 0"
       :loading="isLoading"

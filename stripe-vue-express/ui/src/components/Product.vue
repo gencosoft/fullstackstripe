@@ -1,21 +1,21 @@
 <template>
-  <v-card class="mx-auto" width="500" max-width="600">
-    <v-img class="success--text align-end" height="200px" :src="product.image">
+  <v-card elevation="8" class="mx-auto" width="500" max-width="600">
+    <v-img class="success--text align-end" height="500px" :src="product.image">
     </v-img>
     <v-card-title style="color: #41b782">
       {{ product.name }}
       <v-spacer></v-spacer>
-      Total Amount : $ {{ product.amount * product.quantity }}
+      Total Price : $ {{ product.amount * product.quantity }}
     </v-card-title>
     <v-card-subtitle style="color: #41b782">
-      Unpaired gray nike running shoe
+      {{product.desc}}
     </v-card-subtitle>
 
     <v-card-actions>
       <v-btn
         class="white--text"
         :disabled="product.quantity === 0"
-        elevation="2"
+        elevation="8"
         color="#41b782"
         @click="decrementQuantity()"
       >
@@ -25,7 +25,7 @@
 
       <h3 style="color: #41b782">{{ product.quantity }}</h3>
       <v-spacer></v-spacer>
-      <v-btn class="white--text" color="#41b782" @click="incrementQuantity()">
+      <v-btn elevation="8" class="white--text" color="#41b782" @click="incrementQuantity()">
         <v-icon dark> mdi-plus </v-icon>
       </v-btn>
     </v-card-actions>
@@ -34,16 +34,23 @@
 
 <script>
 export default {
+  props: ["productImage", "productName", "productDesc", "productPrice"],
   data() {
     return {
       product: {
-        name: "Running Shoe",
-        image:
-          "https://images.unsplash.com/photo-1491553895911-0055eca6402d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080",
+        name: "",
+        image:"",
         quantity: 0,
-        amount: 20,
+        amount: 0,
+        desc: ""
       },
     };
+  },
+  created(){
+    this.product.image = this.productImage;
+    this.product.name = this.productName;
+    this.product.desc = this.productDesc;
+    this.product.amount = this.productPrice;
   },
   methods: {
     incrementQuantity() {

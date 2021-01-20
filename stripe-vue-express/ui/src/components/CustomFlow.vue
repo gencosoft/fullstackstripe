@@ -2,9 +2,16 @@
   <v-container>
     <v-row align="center" justify="center">
       <v-col v-if="!paymentIntentCreated">
-        <Product @quantityChanged="quantityChanged"></Product>
+        <Product
+          @quantityChanged="quantityChanged"
+          productName="Succulent Pot"
+          productDesc="Green Succulent Pot"
+          productPrice="20"
+          productImage="https://images.unsplash.com/photo-1516048015710-7a3b4c86be43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit"
+        ></Product>
         <br />
         <v-btn
+          elevation="8"
           v-if="!paymentIntentCreated"
           class="white--text"
           :disabled="product.quantity === 0"

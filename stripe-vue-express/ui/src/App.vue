@@ -20,14 +20,11 @@
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
-    <transition
-      name="slide-in-down"
-      appear
-      appear-active-class="animated slideInDown"
-    >
-      <v-main>
-        <router-view></router-view> </v-main
-    ></transition>
+   
+    <v-main>
+      <v-slide-x-transition mode="in" hide-on-leave="true">
+      <router-view></router-view> </v-slide-x-transition
+    ></v-main>
   </v-app>
 </template>
 
