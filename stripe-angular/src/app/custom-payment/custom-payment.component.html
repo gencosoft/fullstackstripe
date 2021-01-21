@@ -1,1 +1,24 @@
-<p>custom-payment works!</p>
+<h1 class="mat-headline primary"><b>CUSTOM FLOW PAGE</b></h1>
+<h5 class="large primary"><b>Running Shoe</b></h5>
+<h5 class="large primary"><b>Total cost: ${{cost}}</b></h5>
+<div class="primary">Quantity: {{quantity}}. You will pay $20 for each product</div>
+
+<mat-card class="half-width">
+    <mat-form-field class="full-width">
+        <mat-label>Enter Email Address</mat-label>
+        <input matInput type="email" [(ngModel)]="email">
+        <button mat-button *ngIf="email" matSuffix mat-icon-button aria-label="Clear" (click)="email=''">
+          <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Enter Full Name</mat-label>
+        <input matInput type="text" [(ngModel)]="name">
+        <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+          <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <div id="card-element" class="field"></div>
+    <button mat-raised-button color="primary" (click)="createToken()" class="full-width">PAY</button>
+</mat-card>

@@ -9,13 +9,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { StripeMountComponent } from './stripe-mount/stripe-mount.component';
 import { PaymentComponent } from './payment/payment.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
 import { PrebuildCheckoutComponent } from './prebuild-checkout/prebuild-checkout.component';
 import { CustomPaymentComponent } from './custom-payment/custom-payment.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
@@ -26,7 +26,6 @@ import { SubscriptionComponent } from './subscription/subscription.component';
     StripeMountComponent,
     PaymentComponent,
     NavbarComponent,
-    HomeComponent,
     PrebuildCheckoutComponent,
     CustomPaymentComponent,
     SubscriptionComponent
@@ -42,7 +41,8 @@ import { SubscriptionComponent } from './subscription/subscription.component';
     MatTabsModule,
     MatIconModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
