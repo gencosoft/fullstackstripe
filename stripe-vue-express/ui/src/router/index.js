@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
 import SuccessPage from "../views/SuccessPage.vue";
 import ErrorPage from "../views/ErrorPage.vue";
 import PrebuiltCheckoutPage from "../views/PrebuiltCheckoutPage.vue";
@@ -11,8 +10,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "PrebuiltCheckoutPage",
+    component: PrebuiltCheckoutPage,
   },
   {
     path: "/success",

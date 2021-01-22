@@ -4,7 +4,7 @@
       @quantityChanged="quantityChanged"
       productName="Apple Iphone"
       productDesc="11 iPhone Green Mint"
-      productPrice="10000"
+      productPrice="400"
       productImage="https://images.unsplash.com/photo-1592910147752-5e0bc5f04715?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit"
     ></Product>
     <br />
