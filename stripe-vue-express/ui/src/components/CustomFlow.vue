@@ -84,6 +84,7 @@
 </template>
 
 <script>
+// TODO work on custom Stripe Elements
 import Product from "@/components/Product.vue";
 export default {
   components: {
@@ -130,6 +131,8 @@ export default {
     quantityChanged(data) {
       this.product = data;
     },
+    
+    // TODO : use .env variables for domain urls
     createPaymentIntent() {
       this.axios
         .post("http://localhost:3000/create-payment-intent", this.product)
@@ -144,6 +147,7 @@ export default {
           );
         });
     },
+     // TODO : use setup endpoint to get the keys 
     createStripeElements() {
       this.stripe = window.Stripe(
         "pk_test_51I7c7BDHwX5RTLC4wFAHLF4OHXBZO1NvhjADh90QmHW98WPleWg4evwc9TEMvPm3TQzj3TrVOuDdfxZxMxLcGHKX00BQxMTA93"

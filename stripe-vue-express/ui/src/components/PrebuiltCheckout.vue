@@ -44,14 +44,16 @@ export default {
       this.product = data;
     },
     handleCheckout() {
+      // TODO : use setup endpoint to get the keys 
       this.isLoading = true;
       var stripe = window.Stripe(
         "pk_test_51I7c7BDHwX5RTLC4wFAHLF4OHXBZO1NvhjADh90QmHW98WPleWg4evwc9TEMvPm3TQzj3TrVOuDdfxZxMxLcGHKX00BQxMTA93"
       );
 
       var session_id = null;
-      // Create a new Checkout Session using the server-side endpoint you
-      // created in step 3.
+      
+      // TODO : refactor then clauses to one clause
+      // TODO : use .env variables for domain urls
       this.axios
         .post("http://localhost:3000/create-checkout-session", this.product)
         .then((response) => {

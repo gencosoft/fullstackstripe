@@ -1,8 +1,9 @@
 <template>
-  <h2>this is success page</h2>
+  <h2>Your payment is successfull</h2>
 </template>
 
 <script>
+
 export default {};
 </script>
 

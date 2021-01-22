@@ -17,6 +17,8 @@ const calculateOrderAmount = (amount) => {
   return amount * 100;
 };
 
+// TODO : create a setup endpoint
+
 app.post("/create-payment-intent", async (req, res) => {
   try {
     console.log(JSON.stringify(req.body));
@@ -35,6 +37,14 @@ app.post("/create-payment-intent", async (req, res) => {
       .send("An error occured while creating the payment intent" + err);
   }
 });
+
+// TODO use this endpoint in the success page for getting session info
+app.get("/checkout-session", async (req, res) => {
+  const { sessionId } = req.query;
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+  res.send(session);
+});
+
 app.post("/create-checkout-session", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -53,6 +63,8 @@ app.post("/create-checkout-session", async (req, res) => {
         },
       ],
       mode: "payment",
+      // TODO : use env variables for domain urls ex :  success_url: `${domainURL}/success.html
+      // TODO : add ?session_id={CHECKOUT_SESSION_ID} to url
       success_url: "http://localhost:8080/#/success",
       cancel_url: "http://localhost:8080/#/error",
     });
@@ -62,7 +74,12 @@ app.post("/create-checkout-session", async (req, res) => {
     console.error("❌ An error occured while creating the checkout form" + err);
     res
       .status(500)
-      .send("An error occured while creating the checkout form" + err);
+      .send({
+        error: {
+          message: err.message,
+        }
+      });
+
   }
 });
 

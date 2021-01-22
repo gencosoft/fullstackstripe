@@ -1,5 +1,5 @@
 <template>
-  <h2>this is error page</h2>
+  <h2>Your payment is cancelled</h2>
 </template>
 
 <script>
