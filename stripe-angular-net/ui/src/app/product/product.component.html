@@ -2,14 +2,14 @@
 <mat-card class="example-card">
     <img mat-card-image src="assets/item.jpg" alt="running shoe">
     <mat-card-content>
-    <h5 class="large primary"><b>Running Shoe</b></h5>
-    <h5 class="large primary"><b>Unpaired gray nike running shoe</b></h5>
-    <div class="primary">Amount: $20</div>
+    <h5 class="large primary"><b>{{name}}</b></h5>
+    <h5 class="large primary"><b>{{description}}</b></h5>
+    <div class="primary">Amount: ${{amount}}</div>
     </mat-card-content>
     <mat-card-actions>
     <button mat-raised-button color="primary" (click)="remove()">-</button>
-    <span class="center">{{count}}</span>
+    <span class="center">{{quantity}}</span>
     <button mat-raised-button color="primary" (click)="add()">+</button>
     </mat-card-actions>
 </mat-card>
-<button mat-raised-button color="primary" class="example-card" [disabled]="count==0">PROCEED TO CHECKOUT</button>
+<button id="checkout-button" mat-raised-button color="primary" class="example-card" [disabled]="quantity==0" (click)="proceed()">PROCEED TO CHECKOUT</button>

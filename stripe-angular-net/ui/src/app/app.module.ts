@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxStripeModule } from 'ngx-stripe';
 import { HttpClientModule } from '@angular/common/http';
-import { StripeMountComponent } from './stripe-mount/stripe-mount.component';
 import { PaymentComponent } from './payment/payment.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,19 +15,22 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import { PrebuildCheckoutComponent } from './prebuild-checkout/prebuild-checkout.component';
+import { ProductComponent } from './product/product.component';
 import { CustomPaymentComponent } from './custom-payment/custom-payment.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
+import { SuccessComponent } from './prebuild-checkout/success/success.component';
+import { CancelComponent } from './prebuild-checkout/cancel/cancel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StripeMountComponent,
     PaymentComponent,
     NavbarComponent,
-    PrebuildCheckoutComponent,
+    ProductComponent,
     CustomPaymentComponent,
-    SubscriptionComponent
+    SubscriptionComponent,
+    SuccessComponent,
+    CancelComponent
   ],
   imports: [
     BrowserModule,

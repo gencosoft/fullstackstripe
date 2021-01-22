@@ -1,63 +1,43 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StripeCardElement, StripeCardElementOptions, StripeElements, StripeElementsOptions } from '@stripe/stripe-js';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { StripeCardElement, StripeElements } from '@stripe/stripe-js';
 import { StripeService } from 'ngx-stripe';
+import { Subscription } from 'rxjs';
+import { cardOptions, elementsOptions } from 'src/assets/stripe-config';
+import { Payment } from '../models/payment';
+import { StripeDataService } from '../services/stripe-data.service';
 
 @Component({
   selector: 'app-custom-payment',
   templateUrl: './custom-payment.component.html',
   styleUrls: ['./custom-payment.component.css']
 })
-export class CustomPaymentComponent implements OnInit, AfterViewInit {
+export class CustomPaymentComponent implements OnInit, OnDestroy {
 
-  cost: number;
   quantity: number;
+  cost: number;
   email: string;
   name: string;
+  result: string;
 
   elements: StripeElements;
   card: StripeCardElement;
-  
-  cardOptions: StripeCardElementOptions = {
-    style: {
-      base: {
-        iconColor: '#666EE8',
-        color: '#31325F',
-        fontWeight: '300',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSize: '18px',
-        '::placeholder': {
-          color: '#CFD7E0'
-        }
-      }
-    }
-  };
-
-  elementsOptions: StripeElementsOptions = {
-    locale: 'en'
-  };
-
-  form: FormGroup;
+  subscription: Subscription;
 
   constructor(
-    private stripeService: StripeService
-  ) {}
-
-  ngOnInit(): void {
-    this.cost = 100;
-    this.quantity = 5;
-
-    
+    private stripeService: StripeService,
+    private dataService: StripeDataService 
+  ) {
+    this.quantity = history.state.quantity,
+    this.cost = history.state.cost;
   }
 
-  ngAfterViewInit(): void{
-    this.stripeService.elements(this.elementsOptions)
+  ngOnInit(): void {
+    this.stripeService.elements(elementsOptions)
       .subscribe(elements => {
         this.elements = elements;
         // Only mount the element the first time
         if (!this.card) {
-          console.log('enters')
-          this.card = this.elements.create('card', this.cardOptions);
+          this.card = this.elements.create('card', cardOptions);
           this.card.mount('#card-element');
         }
       });
@@ -68,15 +48,30 @@ export class CustomPaymentComponent implements OnInit, AfterViewInit {
       .createToken(this.card, { name: this.name })
       .subscribe((result) => {
         if (result.token) {
-          // Use the token
-          console.log(result.token.id);
+          let payment: Payment = {
+            Token: result.token.id,
+            Description: "Payment from angular custom-payment component.",
+            Currency: "usd",
+            Email: this.email,
+            Amount: this.cost * this.quantity * 100
+          };
+
+          this.subscription = this.dataService
+            .paymentFromToken(payment)
+            .subscribe(x => {
+              this.result = "Payment was successfully processed!";
+            }, err => {
+              this.result = "An error occured while trying to post the payment."
+              console.log('error-token-create', err);
+            });
         } else if (result.error) {
           // Error creating the token
           console.log(result.error.message);
         }
       });
   }
-  
 
-  
+  ngOnDestroy(): void {
+    if(this.subscription) this.subscription.unsubscribe();
+  }
 }
