@@ -22,7 +22,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-slide-x-transition mode="in" hide-on-leave="true">
+      <v-slide-x-transition :hide-on-leave="hideOnLeave">
         <router-view></router-view> </v-slide-x-transition
     ></v-main>
   </v-app>
@@ -34,6 +34,7 @@ export default {
 
   data: () => ({
     //
+    hideOnLeave: true,
   }),
   methods: {
     openDashboard() {
