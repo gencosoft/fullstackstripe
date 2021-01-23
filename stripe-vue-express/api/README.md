@@ -1,8 +1,8 @@
-# Full Stack Stripe - Node/Express
+# FullStack Stripe - Node/Express
 
-Assuming you’ve already installed [Node.js](https://nodejs.org/) there are 3 simple steps
+Assuming you’ve already installed [Node.js](https://nodejs.org/) there are 3 simple terminal commands to run the application.
 
-## 1 Navigate to the api directory
+## 1. Navigate to the api directory
 
 ```sh
 $ cd /api
@@ -20,6 +20,6 @@ $ npm install
 $ npm start
 ```
 
-You should see the following output
+You should see the following output in your terminal.
 
 ✔️ API is up and running at http://localhost:3000

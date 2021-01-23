@@ -1,1 +1,1 @@
-# Full Stack Stripe - Vue
+# FullStack Stripe - Vue
