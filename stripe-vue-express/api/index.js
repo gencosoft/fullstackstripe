@@ -34,17 +34,26 @@ app.post("/create-payment-intent", async (req, res) => {
     console.error(
       "❌ An error occured while creating the payment intent." + err
     );
-    res
-      .status(500)
-      .send("An error occured while creating the payment intent" + err);
+    res.status(500).send({
+      error: {
+        message: err.message,
+      },
+    });
   }
 });
 
-// TODO use this endpoint in the success page for getting session info
 app.get("/retrieve-checkout-session", async (req, res) => {
-  const { sessionId } = req.query;
-  const session = await stripe.checkout.sessions.retrieve(sessionId);
-  res.send(session);
+  try {
+    const { sessionId } = req.query;
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    res.send(session);
+  } catch (err) {
+    res.status(500).send({
+      error: {
+        message: err.message,
+      },
+    });
+  }
 });
 
 app.post("/create-checkout-session", async (req, res) => {
