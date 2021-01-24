@@ -38,25 +38,28 @@ export default {
         amount: null,
       },
       sessionId: null,
+      stripe: null,
     };
+  },
+  created() {
+    // TODO : use setup endpoint to get the keys
+    this.stripe = window.Stripe(
+      "pk_test_51I7c7BDHwX5RTLC4wFAHLF4OHXBZO1NvhjADh90QmHW98WPleWg4evwc9TEMvPm3TQzj3TrVOuDdfxZxMxLcGHKX00BQxMTA93"
+    );
   },
   methods: {
     quantityChanged(data) {
       this.product = data;
     },
     async handleCheckout() {
-      // TODO : use setup endpoint to get the keys
-      this.isLoading = true;
-      var stripe = window.Stripe(
-        "pk_test_51I7c7BDHwX5RTLC4wFAHLF4OHXBZO1NvhjADh90QmHW98WPleWg4evwc9TEMvPm3TQzj3TrVOuDdfxZxMxLcGHKX00BQxMTA93"
-      );
       // TODO : use .env variables for domain urls
       try {
+        this.isLoading = true;
         const paymentSession = await this.axios.post(
           "http://localhost:3000/payment-session",
           this.product
         );
-        const result = await stripe.redirectToCheckout({
+        const result = await this.stripe.redirectToCheckout({
           sessionId: paymentSession.data.id,
         });
         if (result.error) {

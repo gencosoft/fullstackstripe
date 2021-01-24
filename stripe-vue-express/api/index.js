@@ -13,18 +13,19 @@ app.use(cors());
 app.use(express.json());
 
 const calculateOrderAmount = (amount) => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
+  // Calculating the order total on the server to prevent
   // people from directly manipulating the amount on the client
   return amount * 100;
 };
 
 // TODO : create a setup endpoint
 
+/**
+ * Creates A Custom Payment Intent
+ */
 app.post("/create-payment-intent", async (req, res) => {
   try {
     console.log(JSON.stringify(req.body));
-    // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
       amount: calculateOrderAmount(req.body.amount),
       currency: "usd",
@@ -44,17 +45,21 @@ app.post("/create-payment-intent", async (req, res) => {
   }
 });
 
+/**
+ * Creates A Prebuilt Subscription Session
+ */
 app.post("/subscription-session", async (req, res) => {
   try {
-    const { priceId } = req.body.priceId;
-    const { quantity } = req.body.quantity;
+    console.log("Request Body : " + JSON.stringify(req.body));
+    const priceId = req.body.priceId;
+    console.log("priceId : " + priceId);
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
       line_items: [
         {
-          priceId: priceId,
-          quantity: quantity,
+          price: priceId,
+          quantity: 1,
         },
       ],
       success_url:
@@ -75,6 +80,9 @@ app.post("/subscription-session", async (req, res) => {
   }
 });
 
+/**
+ * Creates A Prebuilt Checkout Session
+ */
 app.post("/payment-session", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -94,7 +102,6 @@ app.post("/payment-session", async (req, res) => {
         },
       ],
       // TODO : use env variables for domain urls ex :  success_url: `${domainURL}/success.html
-      // TODO : add ?session_id={CHECKOUT_SESSION_ID} to url
       success_url:
         "http://localhost:8080/#/success?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "http://localhost:8080/#/error",
@@ -113,6 +120,9 @@ app.post("/payment-session", async (req, res) => {
   }
 });
 
+/**
+ * Retrieves An Existing Checkout Session
+ */
 app.get("/payment-session", async (req, res) => {
   try {
     const { sessionId } = req.query;

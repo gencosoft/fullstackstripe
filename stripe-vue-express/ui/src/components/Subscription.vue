@@ -13,7 +13,14 @@
             </v-card-subtitle>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn dark x-large color="teal darken-1">Select</v-btn>
+              <v-btn
+                :loading="isPlan1Loading"
+                @click="selectPlan(priceIdPlan1, 1)"
+                dark
+                x-large
+                color="teal darken-1"
+                >Select</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-hover>
@@ -22,7 +29,7 @@
         <v-hover v-slot="{ hover }">
           <v-card :elevation="hover ? 16 : 2" width="500">
             <v-card-title class="teal--text darken-1">
-              Premium $25.00
+              Premium $50.00
             </v-card-title>
             <v-card-subtitle class="teal--text darken-1">
               <p class="teal--text darken-1">Per Month</p>
@@ -30,24 +37,14 @@
             </v-card-subtitle>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn dark x-large color="teal darken-1">Select</v-btn>
-            </v-card-actions>
-          </v-card></v-hover
-        ></v-col
-      >
-      <v-col
-        ><v-hover v-slot="{ hover }">
-          <v-card :elevation="hover ? 16 : 2" width="500" class="mx-auto">
-            <v-card-title class="teal--text darken-1">
-              Enterprise $100.00
-            </v-card-title>
-            <v-card-subtitle class="teal--text darken-1">
-              <p class="teal--text darken-1">Per Month</p>
-              <p class="teal--text darken-1">Billed Monthly</p>
-            </v-card-subtitle>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn dark x-large color="teal darken-1">Select</v-btn>
+              <v-btn
+                @click="selectPlan(priceIdPlan2, 2)"
+                dark
+                :loading="isPlan2Loading"
+                x-large
+                color="teal darken-1"
+                >Select</v-btn
+              >
             </v-card-actions>
           </v-card></v-hover
         ></v-col
@@ -60,12 +57,44 @@
 export default {
   data() {
     return {
+      isPlan1Loading: false,
+      isPlan2Loading: false,
+      sessionId: null,
+      stripe: null,
+      priceIdPlan1: "price_1ID3diDHwX5RTLC47TEOqRDf",
+      priceIdPlan2: "price_1ID3ecDHwX5RTLC4qdxSmqbw",
     };
   },
+  created() {
+    // TODO : use setup endpoint to get the keys
+    this.stripe = window.Stripe(
+      "pk_test_51I7c7BDHwX5RTLC4wFAHLF4OHXBZO1NvhjADh90QmHW98WPleWg4evwc9TEMvPm3TQzj3TrVOuDdfxZxMxLcGHKX00BQxMTA93"
+    );
+  },
   methods: {
-    selectPlan() {
-     
-    
+    async selectPlan(priceId, btnNo) {
+      // TODO : use .env variables for domain urls
+      try {
+        if (btnNo === 1) this.isPlan1Loading = true;
+        if (btnNo === 2) this.isPlan2Loading = true;
+        const paymentSession = await this.axios.post(
+          "http://localhost:3000/subscription-session",
+          { priceId: priceId }
+        );
+        const result = await this.stripe.redirectToCheckout({
+          sessionId: paymentSession.data.id,
+        });
+        if (result.error) {
+          alert(result.error.message);
+        }
+        this.isPlan1Loading = false;
+        this.isPlan2Loading = false;
+      } catch (error) {
+        // TODO : show error to customer
+        console.error("Error:", error);
+        this.isPlan1Loading = false;
+        this.isPlan2Loading = false;
+      }
     },
   },
 };
