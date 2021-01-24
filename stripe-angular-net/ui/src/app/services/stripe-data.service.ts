@@ -29,4 +29,8 @@ export class StripeDataService {
   getSubscriptionSession(sessionId): Observable<any>{
     return this.http.get(this.baseUrl + '/subscription-session?sessionId=' + sessionId);
   }
+
+  createCustomerPortalSession(sessionId): Observable<any>{
+    return this.http.post(this.baseUrl + '/customer-portal', sessionId);
+  }
 }

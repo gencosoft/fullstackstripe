@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StripeService } from 'ngx-stripe';
 import { Subscription } from 'rxjs';
 import { StripeDataService } from 'src/app/services/stripe-data.service';
 
@@ -11,13 +10,12 @@ import { StripeDataService } from 'src/app/services/stripe-data.service';
 })
 export class SubscribeSuccessComponent implements OnInit, OnDestroy {
 
-  customerId;
   sessionId: string;
+  customerId: string;
   subscription: Subscription
 
   constructor(
     private _route: ActivatedRoute,
-    private _stripeService: StripeService,
     private _dataService: StripeDataService) {
     this.sessionId =  this._route.snapshot.queryParams.sessionId;
   }
@@ -28,11 +26,20 @@ export class SubscribeSuccessComponent implements OnInit, OnDestroy {
       .subscribe(x => {
         console.log('session', x);
         this.customerId = x.customerId;
+      }, err => {
+        console.log('error-get-subscription-session', err);
       });
   }
 
   manageBilling(){
-    
+    this.subscription = this._dataService
+      .createCustomerPortalSession({SessionId: this.sessionId})
+      .subscribe(x => {
+        console.log('portal-session', x);
+        window.location.href = x.url;
+      }, err => {
+        console.log('error-create-portal-session', err);
+      });
   }
 
   ngOnDestroy(): void {

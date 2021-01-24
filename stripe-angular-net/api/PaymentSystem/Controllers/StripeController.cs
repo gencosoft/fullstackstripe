@@ -136,12 +136,14 @@ namespace PaymentSystem.Controllers
             var options = new Stripe.BillingPortal.SessionCreateOptions
             {
                 Customer = checkoutSession.CustomerId,
-                ReturnUrl = returnUrl,
+                ReturnUrl = returnUrl
             };
             var service = new Stripe.BillingPortal.SessionService();
             var session = await service.CreateAsync(options);
 
-            return Ok(session);
+            data.Url = session.Url;
+
+            return Ok(data);
         }
     }
 }

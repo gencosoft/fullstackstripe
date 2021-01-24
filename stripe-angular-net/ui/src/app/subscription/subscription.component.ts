@@ -46,10 +46,10 @@ export class SubscriptionComponent implements OnDestroy{
         this._stripeService.redirectToCheckout({sessionId: x.sessionId})
           .subscribe(x => {
           }, err => {
-            console.log('error-prebuild-session', err);
+            console.log('error-redirec-subscription-session', err);
           });
       }, err => {
-        console.log('error-prebuild-session', err);
+        console.log('error-create-subscription-session', err);
       });
   }
 
