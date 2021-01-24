@@ -26,6 +26,17 @@
         <v-btn class="white--text" large elevation="4" color="teal darken-1">
           Restart Demo
         </v-btn>
+        <v-btn
+          :loading="manageBillingLoading"
+          @click="customerPortal"
+          class="white--text"
+          large
+          elevation="4"
+          color="teal darken-1"
+        >
+          Manage Billing
+          <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -38,6 +49,7 @@ export default {
       sessionId: "",
       message: "",
       loading: true,
+      manageBillingLoading: false,
     };
   },
   created() {
@@ -52,6 +64,24 @@ export default {
         this.message = error.message;
         this.loading = false;
       });
+  },
+  methods: {
+    async customerPortal() {
+      try {
+        this.manageBillingLoading = true;
+        const response = await this.axios.post(
+          "http://localhost:3000/customer-portal",
+          {
+            sessionId: this.sessionId,
+          }
+        );
+        this.manageBillingLoading = false;
+        window.location.href = response.data.url;
+      } catch (err) {
+        this.manageBillingLoading = false;
+        console.error("Error:", err);
+      }
+    },
   },
 };
 </script>

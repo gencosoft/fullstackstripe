@@ -35,7 +35,7 @@ app.post("/create-payment-intent", async (req, res) => {
     res.status(200).send({ clientSecret: paymentIntent.client_secret });
   } catch (err) {
     console.error(
-      "❌ An error occured while creating the payment intent." + err
+      "❌ An error occured while creating the payment intent. " + err
     );
     res.status(400).send({
       error: {
@@ -69,9 +69,7 @@ app.post("/subscription-session", async (req, res) => {
     console.log("✔️  Checkout Session Created.");
     res.send({ id: session.id });
   } catch (err) {
-    console.error(
-      "❌ An error occured while creating the checkout session" + err
-    );
+    console.error("❌ /subscription-session error occured. " + err);
     res.status(400).send({
       error: {
         message: err.message,
@@ -109,9 +107,7 @@ app.post("/payment-session", async (req, res) => {
     console.log("✔️  Checkout Session Created.");
     res.send({ id: session.id });
   } catch (err) {
-    console.error(
-      "❌ An error occured while creating the checkout session" + err
-    );
+    console.error("❌ /payment-session error occured. " + err);
     res.status(400).send({
       error: {
         message: err.message,
@@ -129,6 +125,35 @@ app.get("/payment-session", async (req, res) => {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     res.send(session);
   } catch (err) {
+    res.status(400).send({
+      error: {
+        message: err.message,
+      },
+    });
+  }
+});
+
+app.post("/customer-portal", async (req, res) => {
+  try {
+    // For demonstration purposes, we're using the Checkout session to retrieve the customer ID.
+    // Typically this is stored alongside the authenticated user in your database.
+    const { sessionId } = req.body;
+    const checkoutsession = await stripe.checkout.sessions.retrieve(sessionId);
+
+    // This is the url to which the customer will be redirected when they are done
+    // managign their billing with the portal.
+    const returnUrl = "http://localhost:8080/#/success?session_id=" + sessionId;
+
+    const portalsession = await stripe.billingPortal.sessions.create({
+      customer: checkoutsession.customer,
+      return_url: returnUrl,
+    });
+
+    res.send({
+      url: portalsession.url,
+    });
+  } catch (err) {
+    console.error("❌ /customer-portal api error occured. " + err);
     res.status(400).send({
       error: {
         message: err.message,
