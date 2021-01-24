@@ -37,49 +37,37 @@ export default {
         quantity: 0,
         amount: null,
       },
+      sessionId: null,
     };
   },
   methods: {
     quantityChanged(data) {
       this.product = data;
     },
-    handleCheckout() {
+    async handleCheckout() {
       // TODO : use setup endpoint to get the keys
       this.isLoading = true;
       var stripe = window.Stripe(
         "pk_test_51I7c7BDHwX5RTLC4wFAHLF4OHXBZO1NvhjADh90QmHW98WPleWg4evwc9TEMvPm3TQzj3TrVOuDdfxZxMxLcGHKX00BQxMTA93"
       );
-
-      var session_id = null;
-
-      // TODO : refactor then clauses to one clause
       // TODO : use .env variables for domain urls
-      this.axios
-        .post("http://localhost:3000/create-checkout-session", this.product)
-        .then((response) => {
-          console.log("response is " + JSON.stringify(response.data.id));
-          session_id = response.data.id;
-        })
-        .then((session) => {
-          console.log("your session " + JSON.stringify(session));
-          return stripe.redirectToCheckout({
-            sessionId: session_id,
-          });
-        })
-        .then((result) => {
-          console.log("redirectToCheckout result : " + result);
-          this.isLoading = false;
-          // If `redirectToCheckout` fails due to a browser or network
-          // error, you should display the localized error message to your
-          // customer using `error.message`.
-          if (result.error) {
-            alert(result.error.message);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          this.isLoading = false;
+      try {
+        const paymentSession = await this.axios.post(
+          "http://localhost:3000/payment-session",
+          this.product
+        );
+        const result = await stripe.redirectToCheckout({
+          sessionId: paymentSession.data.id,
         });
+        if (result.error) {
+          alert(result.error.message);
+        }
+        this.isLoading = false;
+      } catch (error) {
+        // TODO : show error to customer
+        console.error("Error:", error);
+        this.isLoading = false;
+      }
     },
   },
 };

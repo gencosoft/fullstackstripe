@@ -5,7 +5,9 @@ var cors = require("cors");
 
 // Remember to switch to live secret key in production!
 const Stripe = require("stripe");
-const stripe = Stripe("sk_test_");
+const stripe = Stripe(
+  "sk_test_51I7c7BDHwX5RTLC4dWbTaqJBvBjN0XrjE21D1vbqmzwVEyVhwa3hcNiNukb4xWYfvcSOwU1ZoV8TzYDmT8a6FQz500EinWwVGJ"
+);
 
 app.use(cors());
 app.use(express.json());
@@ -34,7 +36,7 @@ app.post("/create-payment-intent", async (req, res) => {
     console.error(
       "❌ An error occured while creating the payment intent." + err
     );
-    res.status(500).send({
+    res.status(400).send({
       error: {
         message: err.message,
       },
@@ -42,13 +44,30 @@ app.post("/create-payment-intent", async (req, res) => {
   }
 });
 
-app.get("/retrieve-checkout-session", async (req, res) => {
+app.post("/subscription-session", async (req, res) => {
   try {
-    const { sessionId } = req.query;
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
-    res.send(session);
+    const { priceId } = req.body.priceId;
+    const { quantity } = req.body.quantity;
+    const session = await stripe.checkout.sessions.create({
+      mode: "subscription",
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          priceId: priceId,
+          quantity: quantity,
+        },
+      ],
+      success_url:
+        "http://localhost:8080/#/success?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: "http://localhost:8080/#/error",
+    });
+    console.log("✔️  Checkout Session Created.");
+    res.send({ id: session.id });
   } catch (err) {
-    res.status(500).send({
+    console.error(
+      "❌ An error occured while creating the checkout session" + err
+    );
+    res.status(400).send({
       error: {
         message: err.message,
       },
@@ -56,9 +75,10 @@ app.get("/retrieve-checkout-session", async (req, res) => {
   }
 });
 
-app.post("/create-checkout-session", async (req, res) => {
+app.post("/payment-session", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
+      mode: "payment",
       payment_method_types: ["card"],
       line_items: [
         {
@@ -73,7 +93,6 @@ app.post("/create-checkout-session", async (req, res) => {
           quantity: req.body.quantity,
         },
       ],
-      mode: "payment",
       // TODO : use env variables for domain urls ex :  success_url: `${domainURL}/success.html
       // TODO : add ?session_id={CHECKOUT_SESSION_ID} to url
       success_url:
@@ -83,8 +102,24 @@ app.post("/create-checkout-session", async (req, res) => {
     console.log("✔️  Checkout Session Created.");
     res.send({ id: session.id });
   } catch (err) {
-    console.error("❌ An error occured while creating the checkout form" + err);
-    res.status(500).send({
+    console.error(
+      "❌ An error occured while creating the checkout session" + err
+    );
+    res.status(400).send({
+      error: {
+        message: err.message,
+      },
+    });
+  }
+});
+
+app.get("/payment-session", async (req, res) => {
+  try {
+    const { sessionId } = req.query;
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    res.send(session);
+  } catch (err) {
+    res.status(400).send({
       error: {
         message: err.message,
       },

@@ -43,10 +43,7 @@ export default {
   created() {
     this.sessionId = this.$route.query.session_id;
     this.axios
-      .get(
-        "http://localhost:3000/retrieve-checkout-session?sessionId=" +
-          this.sessionId
-      )
+      .get("http://localhost:3000/payment-session?sessionId=" + this.sessionId)
       .then((result) => {
         this.message = JSON.stringify(result.data, null, 2);
         this.loading = false;
