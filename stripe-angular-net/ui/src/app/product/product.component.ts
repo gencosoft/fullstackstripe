@@ -40,7 +40,6 @@ export class ProductComponent {
   }
 
   proceed(){
-    
     if(this.isPrebuild){
       let product: Product = {
         ProductName: this.name,
@@ -50,19 +49,16 @@ export class ProductComponent {
       };
 
       this.subscription = this._dataService
-        .createSession(product)
+        .createPaymentSession(product)
         .subscribe(x => {
-          console.log('prebuild-session-result', x);
           this._stripeService.redirectToCheckout({sessionId: x.id})
             .subscribe(x => {
-              console.log('success-prebuild-session');
             }, err => {
               console.log('error-prebuild-session', err);
             });
         }, err => {
           console.log('error-prebuild-session', err);
         });
-      //this.stripeService.redirectToCheckout({sessionId: sessionId})
     } else{
       this._router.navigate(['/custom-payment'], {state:{quantity: this.quantity, cost: this.amount}});
     }

@@ -20,6 +20,9 @@ import { CustomPaymentComponent } from './custom-payment/custom-payment.componen
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { SuccessComponent } from './prebuild-checkout/success/success.component';
 import { CancelComponent } from './prebuild-checkout/cancel/cancel.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { SubscribeCancelComponent } from './subscription/subscribe-cancel/subscribe-cancel.component';
+import { SubscribeSuccessComponent } from './subscription/subscribe-success/subscribe-success.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { CancelComponent } from './prebuild-checkout/cancel/cancel.component';
     CustomPaymentComponent,
     SubscriptionComponent,
     SuccessComponent,
-    CancelComponent
+    CancelComponent,
+    SubscribeCancelComponent,
+    SubscribeSuccessComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +45,7 @@ import { CancelComponent } from './prebuild-checkout/cancel/cancel.component';
     HttpClientModule,
     NgxStripeModule.forRoot('pk_test_51I3vwwCAVxkeCX4QWqibRQITeb9iG4wNPE7sW1Wzb8KitLSEawyI4BC8e31r8ysznVfjenkD55PMLNNG1jAAh2d800nOn5T4yc'),
     BrowserAnimationsModule,
+    FlexLayoutModule,
     MatTabsModule,
     MatIconModule,
     MatCardModule,

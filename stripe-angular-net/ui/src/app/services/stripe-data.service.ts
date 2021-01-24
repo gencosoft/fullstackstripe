@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Payment } from '../models/payment';
 import { Product } from '../models/product';
+import { SubscriptionSession } from '../models/subscription-session';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,15 @@ export class StripeDataService {
     return this.http.post(this.baseUrl + '/token', payment);
   }
 
-  createSession(product: Product): Observable<any>{
-    console.log('product', product);
-    return this.http.post(this.baseUrl + '/session', product);
+  createPaymentSession(product: Product): Observable<any>{
+    return this.http.post(this.baseUrl + '/payment-session', product);
+  }
+
+  createSubscriptionSession(data: SubscriptionSession): Observable<any>{
+    return this.http.post(this.baseUrl + '/subscription-session', data);
+  }
+
+  getSubscriptionSession(sessionId): Observable<any>{
+    return this.http.get(this.baseUrl + '/subscription-session?sessionId=' + sessionId);
   }
 }
