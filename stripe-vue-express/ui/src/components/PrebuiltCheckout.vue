@@ -56,7 +56,7 @@ export default {
       try {
         this.isLoading = true;
         const paymentSession = await this.axios.post(
-          "http://localhost:3000/payment-session",
+          "https://fullstackstripe-api-xbl5gobrwq-ey.a.run.app/payment-session",
           this.product
         );
         const result = await this.stripe.redirectToCheckout({

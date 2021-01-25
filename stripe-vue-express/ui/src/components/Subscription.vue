@@ -91,7 +91,7 @@ export default {
         if (btnNo === 1) this.isPlan1Loading = true;
         if (btnNo === 2) this.isPlan2Loading = true;
         const paymentSession = await this.axios.post(
-          "http://localhost:3000/subscription-session",
+          "https://fullstackstripe-api-xbl5gobrwq-ey.a.run.app/subscription-session",
           { priceId: priceId }
         );
         const result = await this.stripe.redirectToCheckout({

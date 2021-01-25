@@ -135,7 +135,7 @@ export default {
     // TODO : use .env variables for domain urls
     createPaymentIntent() {
       this.axios
-        .post("http://localhost:3000/create-payment-intent", this.product)
+        .post("https://fullstackstripe-api-xbl5gobrwq-ey.a.run.app/create-payment-intent", this.product)
         .then((response) => {
           this.clientSecret = response.data.clientSecret;
           this.paymentIntentCreated = true;

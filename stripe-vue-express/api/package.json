@@ -13,7 +13,7 @@
     "nodejs",
     "javascript"
   ],
-  "author": "fullstackpayment.com",
+  "author": "Mehmet Rasid Gencosmanoglu",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
