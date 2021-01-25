@@ -12,11 +12,6 @@ namespace PaymentSystem.Controllers
     [ApiController]
     public class StripeController : Controller
     {
-        public StripeController()
-        {
-            StripeConfiguration.ApiKey = "sk_test_51I3vwwCAVxkeCX4Q1oj0bkDbuTi8WBxxYn3GFhIgBLkV4hQN7HJsUCXb4HSIlBeGJdBuTi9PZ7bU2SAqcckIDBrL00Ccdn3QU4";
-        }
-
         [HttpPost("token")]
         public IActionResult ChargePayment(StripeDataModel data)
         {

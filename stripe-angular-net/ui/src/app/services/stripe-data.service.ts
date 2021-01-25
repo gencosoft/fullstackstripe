@@ -10,7 +10,8 @@ import { SubscriptionSession } from '../models/subscription-session';
 })
 export class StripeDataService {
 
-  baseUrl = 'https://localhost:44356/api/stripe';
+  // baseUrl = 'https://localhost:44356/api/stripe';
+  baseUrl = 'https://gencosoft-paymentapi.azurewebsites.net/api/stripe';
 
   constructor(private http: HttpClient) { }
 
