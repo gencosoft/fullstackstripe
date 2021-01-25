@@ -70,7 +70,7 @@ export default {
       try {
         this.manageBillingLoading = true;
         const response = await this.axios.post(
-          "http://localhost:3000/customer-portal",
+          "https://fullstackstripe-api-xbl5gobrwq-ey.a.run.app/customer-portal",
           {
             sessionId: this.sessionId,
           }
