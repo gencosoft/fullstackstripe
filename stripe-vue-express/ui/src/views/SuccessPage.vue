@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fill-height fluid class="justify-center align-center">
     <v-sheet v-if="loading" color="grey lighten-4" class="pa-3">
       <v-skeleton-loader
         loading="true"
@@ -29,10 +29,10 @@
         <v-btn
           :loading="manageBillingLoading"
           @click="customerPortal"
-          class="white--text"
+          class="ma-2 white--text"
           large
           elevation="4"
-          color="teal darken-1"
+          color="accent darken-2"
         >
           Manage Billing
           <v-icon>mdi-open-in-new</v-icon>

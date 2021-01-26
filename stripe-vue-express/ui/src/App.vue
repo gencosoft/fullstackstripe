@@ -3,19 +3,19 @@
     <v-app-bar app flat color="teal darken-1" dark>
       <v-spacer></v-spacer>
 
-      <v-btn to="/prebuiltcheckout" target="_self" text>
+      <v-btn class="ma-2" to="/prebuiltcheckout" target="_self" text>
         <span class="mr-2">Prebuilt Checkout Flow</span>
       </v-btn>
 
-      <v-btn to="/customflow" target="_self" text>
+      <v-btn class="ma-2" to="/customflow" target="_self" text>
         <span class="mr-2">Custom Payment Flow</span>
       </v-btn>
 
-      <v-btn to="/subscription" target="_self" text>
+      <v-btn class="ma-2" to="/subscription" target="_self" text>
         <span class="mr-2">Subscription</span>
       </v-btn>
 
-      <v-btn @click="openDashboard" text>
+      <v-btn class="ma-2" color="accent darken-2" @click="openDashboard">
         <span class="mr-2">Stripe Dashboard</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>

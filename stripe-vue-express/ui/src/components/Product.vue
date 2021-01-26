@@ -1,9 +1,9 @@
 <template>
-  <v-card elevation="8" class="mx-auto" width="500" max-width="600">
-    <v-img height="500px" :src="product.image"> </v-img>
+  <v-card elevation="8" class="mx-auto" >
+    <v-img  max-width="400" :src="product.image"> </v-img>
     <v-card-title style="color: teal">
       {{ product.name }}
-      <v-spacer></v-spacer>
+      <br>
       Total Price : ${{ product.amount * product.quantity }}
     </v-card-title>
     <v-card-subtitle style="color: teal">
