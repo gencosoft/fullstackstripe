@@ -1,6 +1,7 @@
 .DS_Store
 /stripe-vue-express/api/node_modules
 /stripe-vue-express/ui/node_modules
+/stripe-vue-express/api/.env*
 /dist
 
 
