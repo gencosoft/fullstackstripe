@@ -1,12 +1,17 @@
 const express = require("express");
 const app = express();
-var cors = require("cors");
-
-// Remember to switch to live secret key in production!
 const Stripe = require("stripe");
-const stripe = Stripe(
-  "sk_test_51I7c7BDHwX5RTLC4dWbTaqJBvBjN0XrjE21D1vbqmzwVEyVhwa3hcNiNukb4xWYfvcSOwU1ZoV8TzYDmT8a6FQz500EinWwVGJ"
-);
+
+if (process.env.NODE_ENV !== "PROD") {
+  require('dotenv').config();
+  console.log("ENVIRONMENT IS " + process.env.NODE_ENV);
+}
+else{
+  console.log("ENVIRONMENT IS PROD");
+}
+
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+var cors = require("cors");
 
 app.use(cors());
 app.use(express.json());
@@ -16,8 +21,6 @@ const calculateOrderAmount = (amount) => {
   // people from directly manipulating the amount on the client
   return amount * 100;
 };
-
-// TODO : create a setup endpoint
 
 /**
  * Creates A Custom Payment Intent
@@ -49,9 +52,10 @@ app.post("/create-payment-intent", async (req, res) => {
  */
 app.post("/subscription-session", async (req, res) => {
   try {
-    console.log("Request Body : " + JSON.stringify(req.body));
     const priceId = req.body.priceId;
-    console.log("priceId : " + priceId);
+    var successUrl = process.env.UI_HOST + "/#/success?session_id={CHECKOUT_SESSION_ID}";
+    var cancelUrl = process.env.UI_HOST + "/#/error";
+
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
@@ -61,11 +65,10 @@ app.post("/subscription-session", async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url:
-        "http://localhost:8080/#/success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:8080/#/error",
+      success_url: successUrl,
+      cancel_url: cancelUrl,
     });
-    console.log("✔️  Checkout Session Created.");
+    console.log("✔️  Subscription Checkout Session Created.");
     res.send({ id: session.id });
   } catch (err) {
     console.error("❌ /subscription-session error occured. " + err);
@@ -82,6 +85,9 @@ app.post("/subscription-session", async (req, res) => {
  */
 app.post("/payment-session", async (req, res) => {
   try {
+    var successUrl = process.env.UI_HOST + "/#/success?session_id={CHECKOUT_SESSION_ID}";
+    var cancelUrl = process.env.UI_HOST + "/#/error";
+    console.log("success url : " + successUrl);
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
@@ -98,12 +104,10 @@ app.post("/payment-session", async (req, res) => {
           quantity: req.body.quantity,
         },
       ],
-      // TODO : use env variables for domain urls ex :  success_url: `${domainURL}/success.html
-      success_url:
-        "http://localhost:8080/#/success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:8080/#/error",
+      success_url: successUrl,
+      cancel_url: cancelUrl,
     });
-    console.log("✔️  Checkout Session Created.");
+    console.log("✔️  Payment Checkout Session Created.");
     res.send({ id: session.id });
   } catch (err) {
     console.error("❌ /payment-session error occured. " + err);
@@ -140,14 +144,14 @@ app.post("/customer-portal", async (req, res) => {
     const checkoutsession = await stripe.checkout.sessions.retrieve(sessionId);
 
     // This is the url to which the customer will be redirected when they are done
-    // managign their billing with the portal.
-    const returnUrl = "http://localhost:8080/#/success?session_id=" + sessionId;
+    // managing their billing with the portal.
+    const returnUrl = process.env.UI_HOST + "/#/success?session_id=" + sessionId;
 
     const portalsession = await stripe.billingPortal.sessions.create({
       customer: checkoutsession.customer,
       return_url: returnUrl,
     });
-
+    console.log("✔️  Customer Portal Session Created.");
     res.send({
       url: portalsession.url,
     });
@@ -162,7 +166,7 @@ app.post("/customer-portal", async (req, res) => {
 });
 
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8082;
 app.listen(port, () => {
   console.log(`✔️  API is up and running at http://localhost:${port}`);
 });
