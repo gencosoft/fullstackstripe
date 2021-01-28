@@ -16,5 +16,12 @@ RUN npm install --only=production
 # Copy local code to the container image.
 COPY . ./
 
+# Set environment variables for container runtime.
+ENV NODE_ENV=PROD
+ENV PORT=8080
+ENV STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET_KEY
+ENV STRIPE_PUBLIC_KEY=YOUR_STRIPE_PUBLIC_KEY
+ENV UI_HOST=https://fullstackstripe-vue-express.netlify.app
+
 # Run the web service on container startup.
 CMD [ "npm", "start" ]
