@@ -15,7 +15,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import { ProductComponent } from './product/product.component';
+import { Product1Component } from './products/product-1/product-1.component';
+import { Product2Component } from './products/product-2/product-2.component';
 import { CustomPaymentComponent } from './custom-payment/custom-payment.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { SuccessComponent } from './prebuild-checkout/success/success.component';
@@ -29,7 +30,8 @@ import { SubscribeSuccessComponent } from './subscription/subscribe-success/subs
     AppComponent,
     PaymentComponent,
     NavbarComponent,
-    ProductComponent,
+    Product1Component,
+    Product2Component,
     CustomPaymentComponent,
     SubscriptionComponent,
     SuccessComponent,

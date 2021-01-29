@@ -1,9 +1,9 @@
-<h1 class="mat-headline primary"><b>PREBUILD CHECKOUT PAGE</b></h1>
 <mat-card class="example-card">
-    <img mat-card-image src="assets/item.jpg" alt="running shoe">
+    <img mat-card-image src="assets/iphone.jpg" alt="running shoe">
     <mat-card-content>
     <h5 class="large primary"><b>{{name}}</b></h5>
-    <h5 class="large primary"><b>{{description}}</b></h5>
+    <h5 class="large primary"><b>Total Price: {{amount * quantity | currency}}</b></h5>
+    <div class="primary">{{description}}</div>
     <div class="primary">Amount: ${{amount}}</div>
     </mat-card-content>
     <mat-card-actions>

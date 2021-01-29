@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { StripeService } from 'ngx-stripe';
 import { Subscription } from 'rxjs';
-import { Product } from '../models/product';
-import { StripeDataService } from '../services/stripe-data.service';
+import { Product } from '../../models/product';
+import { StripeDataService } from '../../services/stripe-data.service';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  selector: 'app-product-2',
+  templateUrl: './product-2.component.html',
+  styleUrls: ['./product-2.component.css']
 })
-export class ProductComponent {
+export class Product2Component {
   name: string;
   description: string;
   quantity: number;
@@ -23,8 +23,8 @@ export class ProductComponent {
     private _stripeService: StripeService,
     private _dataService: StripeDataService
     ) {
-    this.name = 'Running Shoe';
-    this.description = 'Unpaired gray nike running shoe';
+    this.name = 'Succulent Pot';
+    this.description = 'Green Succulent Pot';
     this.quantity = 0;
     this.amount = 20;
     this.isPrebuild = 

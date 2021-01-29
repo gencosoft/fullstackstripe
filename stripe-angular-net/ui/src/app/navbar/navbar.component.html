@@ -1,10 +1,9 @@
-<nav mat-tab-nav-bar backgroundColor="primary">
-  <a
-      mat-tab-link 
-      *ngFor="let link of links"
-      (click)="activeLink = link"
-      [active]="activeLink == link"
-      [routerLink]="link.route"> {{link.label}} 
-  </a>
-  <a mat-tab-link href="https://dashboard.stripe.com/test/dashboard">STRIPE DASHBOARD<mat-icon>launch</mat-icon></a>
+<nav mat-tab-nav-bar backgroundColor="primary" mat-align-tabs="end">
+  <button
+    *ngFor="let link of links"
+    class="btn btn-danger nav-button"
+    (click)="navigate(link.route)">
+    {{link.label}} 
+  </button>
+  <a href="https://dashboard.stripe.com/test/dashboard" class="btn btn-primary nav-button">STRIPE DASHBOARD<mat-icon>launch</mat-icon></a>
 </nav>
