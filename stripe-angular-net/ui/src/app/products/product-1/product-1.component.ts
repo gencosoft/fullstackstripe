@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { StripeService } from 'ngx-stripe';
 import { Subscription } from 'rxjs';
@@ -10,11 +10,8 @@ import { StripeDataService } from '../../services/stripe-data.service';
   templateUrl: './product-1.component.html',
   styleUrls: ['./product-1.component.css']
 })
-export class Product1Component {
-  name: string;
-  description: string;
-  quantity: number;
-  amount: number;
+export class Product1Component implements OnDestroy{
+  product: Product;
   isPrebuild: boolean;
   subscription: Subscription;
 
@@ -23,33 +20,29 @@ export class Product1Component {
     private _stripeService: StripeService,
     private _dataService: StripeDataService
     ) {
-    this.name = 'Apple Iphone';
-    this.description = '11 iPhone Green Mint';
-    this.quantity = 0;
-    this.amount = 400;
+    this.product = {
+      ProductName: 'Apple Iphone',
+      ProductDescription: '11 iPhone Green Mint',
+      ProductImageUrl: 'https://images.unsplash.com/photo-1592910147752-5e0bc5f04715?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit',
+      Amount: 400,
+      Quantity: 0
+    };
     this.isPrebuild = 
       window.location.href.split('/')[window.location.href.split('/').length - 1] == 'prebuild-checkout'
   }
 
   add(){
-    this.quantity ++;
+    this.product.Quantity ++;
   }
 
   remove(){
-    if(this.quantity > 0) this.quantity --;
+    if(this.product.Quantity > 0) this.product.Quantity --;
   }
 
   proceed(){
-    if(this.isPrebuild){
-      let product: Product = {
-        ProductName: this.name,
-        ProductDescription: this.description,
-        Amount: this.amount,
-        Quantity: this.quantity
-      };
-
+    if(this.isPrebuild){ 
       this.subscription = this._dataService
-        .createPaymentSession(product)
+        .createPaymentSession(this.product)
         .subscribe(x => {
           this._stripeService.redirectToCheckout({sessionId: x.id})
             .subscribe(x => {
@@ -60,7 +53,11 @@ export class Product1Component {
           console.log('error-prebuild-session', err);
         });
     } else{
-      this._router.navigate(['/custom-payment'], {state:{quantity: this.quantity, cost: this.amount}});
+      this._router.navigate(['/custom-payment'], {state:{quantity: this.product.Quantity, cost: this.product.Amount}});
     }
+  }
+  
+  ngOnDestroy(): void {
+    if(this.subscription) this.subscription.unsubscribe();
   }
 }

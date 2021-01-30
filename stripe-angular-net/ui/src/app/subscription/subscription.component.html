@@ -1,32 +1,32 @@
 <div fxLayout="row" class="selection-container" fxFill fxLayoutAlign="space-around center" >
     <mat-card class="selection">
+        <img mat-card-image src="assets/Bronze-medal.png" alt="Basic">
         <mat-card-content>
             <h5 class="large primary"><b>Basic {{costBasic | currency}}</b></h5>
-            <div class="primary">Per month</div><br>
-            <div class="primary">Billed monthly</div>
+            <div class="primary">Per month (Billed monthly)</div><br>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="subscribeBasic()">SELECT</button>
+            <button style="width: 100%;" mat-raised-button color="primary" (click)="subscribeBasic()">SELECT</button>
         </mat-card-actions>
     </mat-card>
     <mat-card class="selection">
+        <img mat-card-image src="assets/Silver-medal.png" alt="Premium">
         <mat-card-content>
             <h5 class="large primary"><b>Premium {{costPremium | currency}}</b></h5>
-            <div class="primary">Per month</div><br>
-            <div class="primary">Billed monthly</div>
+            <div class="primary">Per month (Billed monthly)</div><br>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="subscribePremium()">SELECT</button>
+            <button style="width: 100%;" mat-raised-button color="primary" (click)="subscribePremium()">SELECT</button>
         </mat-card-actions>
     </mat-card>
     <mat-card class="selection">
+        <img mat-card-image src="assets/Gold-medal.png" alt="Enterprise">
         <mat-card-content>
             <h5 class="large primary"><b>Enterprise {{costEnterprise | currency}}</b></h5>
-            <div class="primary">Per month</div><br>
-            <div class="primary">Billed monthly</div>
+            <div class="primary">Per month (Billed monthly)</div><br>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="subscribeEnterprise()">SELECT</button>
+            <button style="width: 100%;" mat-raised-button color="primary" (click)="subscribeEnterprise()">SELECT</button>
         </mat-card-actions>
     </mat-card>
 </div>

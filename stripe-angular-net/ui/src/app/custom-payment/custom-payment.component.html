@@ -20,4 +20,7 @@
 
     <div id="card-element" class="field"></div>
     <button mat-raised-button color="primary" (click)="createToken()" class="full-width">PAY</button>
+    <div *ngIf="result" class="alert alert-success" role="alert">
+      {{result}}
+    </div>
 </mat-card>

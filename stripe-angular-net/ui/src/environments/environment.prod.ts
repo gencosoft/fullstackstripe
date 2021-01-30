@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  baseApiUrl: 'https://gencosoft-paymentapi.azurewebsites.net/api/stripe'
 };

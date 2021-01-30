@@ -16,7 +16,7 @@ namespace PaymentSystem.Controllers
         public IActionResult ChargePayment(StripeDataModel data)
         {
             var service = new ChargeService();
-            var charge = service.Create(new ChargeCreateOptions
+            service.Create(new ChargeCreateOptions
             {
                 Amount = data.Amount,
                 Currency = data.Currency,
@@ -25,7 +25,7 @@ namespace PaymentSystem.Controllers
                 Metadata = new Dictionary<string, string>{{"email",data.Email}}
             });
 
-            return Ok(charge.Status);
+            return Ok();
         }
 
         [HttpPost("payment-session")]
@@ -46,15 +46,15 @@ namespace PaymentSystem.Controllers
                             {
                                 Name = data.ProductName,
                                 Description = data.ProductDescription,
-                                Images = new List<string>{ "https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80" }
+                                Images = new List<string>{ data.ProductImageUrl }
                             }
                         },
                         Quantity = data.Quantity
                     }
                 },
                 Mode = "payment",
-                SuccessUrl = "http://localhost:4200/prebuild-checkout/success",
-                CancelUrl = "http://localhost:4200/prebuild-checkout/cancel"
+                SuccessUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/prebuild-checkout/success",
+                CancelUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/prebuild-checkout/cancel"
             };
 
             var service = new SessionService();
@@ -73,8 +73,8 @@ namespace PaymentSystem.Controllers
                 // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
                 // the actual Session ID is returned in the query parameter when your customer
                 // is redirected to the success page.
-                SuccessUrl = "http://localhost:4200/subscription/success?sessionId={CHECKOUT_SESSION_ID}",
-                CancelUrl = "http://localhost:4200/subscription/cancel",
+                SuccessUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/subscription/success?sessionId={CHECKOUT_SESSION_ID}",
+                CancelUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/subscription/cancel",
                 PaymentMethodTypes = new List<string> { "card" },
                 Mode = "subscription",
                 LineItems = new List<SessionLineItemOptions>
@@ -83,9 +83,9 @@ namespace PaymentSystem.Controllers
                     {
                         Price = data.PriceId,
                         // For metered billing, do not pass quantity
-                        Quantity = 1,
-                    },
-                },
+                        Quantity = 1
+                    }
+                }
             };
             var service = new SessionService();
             try
@@ -126,7 +126,7 @@ namespace PaymentSystem.Controllers
 
             // This is the URL to which your customer will return after
             // they are done managing billing in the Customer Portal.
-            var returnUrl = "http://localhost:4200/subscription";
+            var returnUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/subscription";
 
             var options = new Stripe.BillingPortal.SessionCreateOptions
             {

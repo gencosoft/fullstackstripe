@@ -48,6 +48,7 @@ export class CustomPaymentComponent implements OnInit, OnDestroy {
       .createToken(this.card, { name: this.name })
       .subscribe((result) => {
         if (result.token) {
+          console.log(result.token.id);
           let payment: Payment = {
             Token: result.token.id,
             Description: "Payment from angular custom-payment component.",

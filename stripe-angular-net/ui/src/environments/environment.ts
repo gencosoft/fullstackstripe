@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: ''
+  //baseApiUrl: 'https://localhost:44356/api/stripe',
+  baseApiUrl: 'https://gencosoft-paymentapi.azurewebsites.net/api/stripe',
 };
 
 /*

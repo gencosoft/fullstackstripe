@@ -28,7 +28,8 @@ namespace PaymentSystem
                     {
                         builder.WithOrigins
                             (
-                                "http://localhost:4200"
+                                "http://localhost:4200",
+                                "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com"
                             )
                             .AllowAnyMethod().AllowAnyHeader().AllowCredentials();
                     });
