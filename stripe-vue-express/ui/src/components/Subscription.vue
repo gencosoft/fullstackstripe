@@ -3,7 +3,7 @@
     <v-row align="center" justify="center">
       <v-col>
         <v-hover v-slot="{ hover }">
-          <v-card  :elevation="hover ? 16 : 2" width="300">
+          <v-card :elevation="hover ? 16 : 2" width="300">
             <v-img
               height="200px"
               src="https://images.unsplash.com/photo-1592910147752-5e0bc5f04715?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit"
@@ -21,10 +21,9 @@
               <v-btn
                 :loading="isPlan1Loading"
                 @click="selectPlan(priceIdPlan1, 1)"
-                block    
-                dark 
-                rounded    
-                color="teal darken-1"    
+                block
+                dark
+                color="teal darken-1"
                 >Subscribe</v-btn
               >
             </v-card-actions>
@@ -52,10 +51,8 @@
                 @click="selectPlan(priceIdPlan2, 2)"
                 block
                 dark
-                rounded    
-                color="teal darken-1" 
+                color="teal darken-1"
                 :loading="isPlan2Loading"
-                  
                 >Subscribe</v-btn
               >
             </v-card-actions>

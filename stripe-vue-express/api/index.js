@@ -3,12 +3,9 @@ const app = express();
 const Stripe = require("stripe");
 
 if (process.env.NODE_ENV !== "PROD") {
-  require('dotenv').config();
-  console.log("ENVIRONMENT IS " + process.env.NODE_ENV);
+  require("dotenv").config();
 }
-else{
-  console.log("ENVIRONMENT IS PROD");
-}
+console.log("ENVIRONMENT IS " + process.env.NODE_ENV);
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 var cors = require("cors");
@@ -53,7 +50,8 @@ app.post("/create-payment-intent", async (req, res) => {
 app.post("/subscription-session", async (req, res) => {
   try {
     const priceId = req.body.priceId;
-    var successUrl = process.env.UI_HOST + "/#/success?session_id={CHECKOUT_SESSION_ID}";
+    var successUrl =
+      process.env.UI_HOST + "/#/success?session_id={CHECKOUT_SESSION_ID}";
     var cancelUrl = process.env.UI_HOST + "/#/error";
 
     const session = await stripe.checkout.sessions.create({
@@ -85,7 +83,8 @@ app.post("/subscription-session", async (req, res) => {
  */
 app.post("/payment-session", async (req, res) => {
   try {
-    var successUrl = process.env.UI_HOST + "/#/success?session_id={CHECKOUT_SESSION_ID}";
+    var successUrl =
+      process.env.UI_HOST + "/#/success?session_id={CHECKOUT_SESSION_ID}";
     var cancelUrl = process.env.UI_HOST + "/#/error";
     console.log("success url : " + successUrl);
     const session = await stripe.checkout.sessions.create({
@@ -145,7 +144,8 @@ app.post("/customer-portal", async (req, res) => {
 
     // This is the url to which the customer will be redirected when they are done
     // managing their billing with the portal.
-    const returnUrl = process.env.UI_HOST + "/#/success?session_id=" + sessionId;
+    const returnUrl =
+      process.env.UI_HOST + "/#/success?session_id=" + sessionId;
 
     const portalsession = await stripe.billingPortal.sessions.create({
       customer: checkoutsession.customer,
@@ -164,7 +164,6 @@ app.post("/customer-portal", async (req, res) => {
     });
   }
 });
-
 
 const port = process.env.PORT || 8082;
 app.listen(port, () => {

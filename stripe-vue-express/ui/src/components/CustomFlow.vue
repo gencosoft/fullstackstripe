@@ -4,27 +4,14 @@
       <v-col v-if="!paymentIntentCreated">
         <Product
           @quantityChanged="quantityChanged"
+          @handleCheckout="handleCheckout"
+          :isLoading="checkoutLoading"
           productName="Succulent Pot"
           productDesc="Green Succulent Pot"
           productPrice="20"
           productImage="https://images.unsplash.com/photo-1516048015710-7a3b4c86be43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit"
         ></Product>
-        <br />
-        <v-btn
-          elevation="8"
-          v-if="!paymentIntentCreated"
-          class="white--text"
-          :disabled="product.quantity === 0"
-          :loading="checkoutLoading"
-          x-large
-          block
-          color="teal darken-1"
-          @click="handleCheckout()"
-        >
-          Proceed to Checkout
-          <v-icon> mdi-cart-arrow-right </v-icon></v-btn
-        ></v-col
-      >
+      </v-col>
       <v-col v-show="paymentIntentCreated">
         <h1 style="color: #41b782">{{ product.name }}</h1>
         <h2 style="color: #41b782">
@@ -131,11 +118,13 @@ export default {
     quantityChanged(data) {
       this.product = data;
     },
-    
-    // TODO : use .env variables for domain urls
+
     createPaymentIntent() {
       this.axios
-        .post("https://fullstackstripe-api-xbl5gobrwq-ey.a.run.app/create-payment-intent", this.product)
+        .post(
+          "https://fullstackstripe-api-xbl5gobrwq-ey.a.run.app/create-payment-intent",
+          this.product
+        )
         .then((response) => {
           this.clientSecret = response.data.clientSecret;
           this.paymentIntentCreated = true;
@@ -147,7 +136,6 @@ export default {
           );
         });
     },
-     // TODO : use setup endpoint to get the keys 
     createStripeElements() {
       this.stripe = window.Stripe(
         "pk_test_51I7c7BDHwX5RTLC4wFAHLF4OHXBZO1NvhjADh90QmHW98WPleWg4evwc9TEMvPm3TQzj3TrVOuDdfxZxMxLcGHKX00BQxMTA93"
