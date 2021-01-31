@@ -1,30 +1,33 @@
 <template>
   <v-app>
     <v-app-bar app flat style="background-color: teal" dark>
-      <v-spacer></v-spacer>
+      <v-row justify="center" no-gutters>
+        <v-btn class="ma-2" to="/prebuiltcheckout" target="_self" text>
+          <span class="mr-2">Prebuilt Checkout Flow</span>
+        </v-btn>
 
-      <v-btn class="ma-2" to="/prebuiltcheckout" target="_self" text>
-        <span class="mr-2">Prebuilt Checkout Flow</span>
-      </v-btn>
+        <v-btn class="ma-2" to="/customflow" target="_self" text>
+          <span class="mr-2">Custom Payment Flow</span>
+        </v-btn>
 
-      <v-btn class="ma-2" to="/customflow" target="_self" text>
-        <span class="mr-2">Custom Payment Flow</span>
-      </v-btn>
+        <v-btn class="ma-2" to="/subscription" target="_self" text>
+          <span class="mr-2">Subscription</span>
+        </v-btn>
 
-      <v-btn class="ma-2" to="/subscription" target="_self" text>
-        <span class="mr-2">Subscription</span>
-      </v-btn>
-
-      <v-btn class="ma-2" color="accent darken-2" @click="openDashboard">
-        <span class="mr-2">Stripe Dashboard</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+        <v-btn class="ma-2" color="accent darken-2" @click="openDashboard">
+          <span class="mr-2">Stripe Dashboard</span>
+          <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
+      </v-row>
     </v-app-bar>
 
     <v-main>
-      <v-slide-x-transition :hide-on-leave="hideOnLeave">
-        <router-view></router-view> </v-slide-x-transition
-    ></v-main>
+      <v-container ma-8 fill-height class="align-stretch">
+        <v-slide-x-transition :hide-on-leave="hideOnLeave">
+          <router-view></router-view>
+        </v-slide-x-transition>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 

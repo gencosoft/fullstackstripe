@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card elevation="8" max-width="400" class="mx-auto">
-      <v-img height="200" max-width="400" :src="product.image"> </v-img>
+      <v-img max-width="400" :src="product.image"> </v-img>
       <v-card-title style="color: teal">
         {{ product.name }}
         <br />
@@ -13,7 +13,7 @@
       </v-card-subtitle>
       <v-card-text>
         <v-row align="center" justify="center">
-          <v-col cols="12" sm="4" class="py-2"
+          <v-col cols="12" sm="4"
             ><v-btn
               class="white--text"
               :disabled="product.quantity === 0"
@@ -23,17 +23,20 @@
             >
               <v-icon dark> mdi-minus </v-icon>
             </v-btn></v-col
-          ><v-col cols="12" sm="4" class="py-2">
+          ><v-col cols="12" sm="4">
             <h3 style="color: teal">{{ product.quantity }}</h3></v-col
-          ><v-btn
-            elevation="4"
-            class="white--text"
-            color="teal darken-1"
-            @click="incrementQuantity()"
           >
-            <v-icon dark> mdi-plus </v-icon>
-          </v-btn></v-row
-        >
+          <v-col cols="12" sm="4">
+            <v-btn
+              elevation="4"
+              class="white--text"
+              color="teal darken-1"
+              @click="incrementQuantity()"
+            >
+              <v-icon dark> mdi-plus </v-icon>
+            </v-btn></v-col
+          >
+        </v-row>
       </v-card-text>
 
       <v-card-actions>
