@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CustomPaymentComponent } from './custom-payment/custom-payment.component';
+import { LoginComponent } from './login/login.component';
 import { CancelComponent } from './prebuild-checkout/cancel/cancel.component';
 import { SuccessComponent } from './prebuild-checkout/success/success.component';
 import { Product1Component } from './products/product-1/product-1.component';
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'prebuild-checkout/success', component: SuccessComponent},
   { path: 'prebuild-checkout/cancel', component: CancelComponent},
   { path: 'custom-payment', component: CustomPaymentComponent},
-  { path: 'subscription', component: SubscriptionComponent},
+  { path: 'subscription', component: LoginComponent},
+  // { path: 'subscription', component: SubscriptionComponent},
   { path: 'subscription/success', component: SubscribeSuccessComponent},
   { path: 'subscription/cancel', component: SubscribeCancelComponent}
 ];

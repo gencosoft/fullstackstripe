@@ -1,8 +1,12 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using PaymentSystem.Services;
 using Stripe;
 
 namespace PaymentSystem
@@ -20,6 +24,28 @@ namespace PaymentSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var jwtSettings = Configuration.GetSection("JwtSettings");
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
+                    ValidAudience = jwtSettings.GetSection("validAudience").Value,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
+                };
+            });
+
+            services.AddScoped<JwtHandler>();
 
             services.AddCors(options =>
             {
@@ -40,7 +66,7 @@ namespace PaymentSystem
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // This is your real test secret API key.
-            StripeConfiguration.ApiKey = "sk_test_51I3vwwCAVxkeCX4Q1oj0bkDbuTi8WBxxYn3GFhIgBLkV4hQN7HJsUCXb4HSIlBeGJdBuTi9PZ7bU2SAqcckIDBrL00Ccdn3QU4";
+            StripeConfiguration.ApiKey = Configuration.GetSection("StripeSettings").GetSection("apiKey").Value; 
 
             if (env.IsDevelopment())
             {

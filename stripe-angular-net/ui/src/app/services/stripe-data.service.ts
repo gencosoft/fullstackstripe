@@ -14,22 +14,22 @@ export class StripeDataService {
   constructor(private http: HttpClient) { }
 
   paymentFromToken(payment: Payment): Observable<any>{
-    return this.http.post(environment.baseApiUrl + '/token', payment);
+    return this.http.post(environment.baseApiUrl + '/stripe/token', payment);
   }
 
   createPaymentSession(product: Product): Observable<any>{
-    return this.http.post(environment.baseApiUrl + '/payment-session', product);
+    return this.http.post(environment.baseApiUrl + '/stripe/payment-session', product);
   }
 
   createSubscriptionSession(data: SubscriptionSession): Observable<any>{
-    return this.http.post(environment.baseApiUrl + '/subscription-session', data);
+    return this.http.post(environment.baseApiUrl + '/stripe/subscription-session', data);
   }
 
   getSubscriptionSession(sessionId): Observable<any>{
-    return this.http.get(environment.baseApiUrl + '/subscription-session?sessionId=' + sessionId);
+    return this.http.get(environment.baseApiUrl + '/stripe/subscription-session?sessionId=' + sessionId);
   }
 
   createCustomerPortalSession(sessionId): Observable<any>{
-    return this.http.post(environment.baseApiUrl + '/customer-portal', sessionId);
+    return this.http.post(environment.baseApiUrl + '/stripe/customer-portal', sessionId);
   }
 }

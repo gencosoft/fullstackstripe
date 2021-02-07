@@ -24,7 +24,6 @@ export class SubscribeSuccessComponent implements OnInit, OnDestroy {
     this._dataService
       .getSubscriptionSession(this.sessionId)
       .subscribe(x => {
-        console.log('session', x);
         this.customerId = x.customerId;
       }, err => {
         console.log('error-get-subscription-session', err);
@@ -35,7 +34,6 @@ export class SubscribeSuccessComponent implements OnInit, OnDestroy {
     this.subscription = this._dataService
       .createCustomerPortalSession({SessionId: this.sessionId})
       .subscribe(x => {
-        console.log('portal-session', x);
         window.location.href = x.url;
       }, err => {
         console.log('error-create-portal-session', err);

@@ -25,6 +25,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SubscribeCancelComponent } from './subscription/subscribe-cancel/subscribe-cancel.component';
 import { SubscribeSuccessComponent } from './subscription/subscribe-success/subscribe-success.component';
 
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+import { LoginComponent } from './login/login.component';
+import { JwtModule } from '@auth0/angular-jwt';
+
+
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +47,8 @@ import { SubscribeSuccessComponent } from './subscription/subscribe-success/subs
     SuccessComponent,
     CancelComponent,
     SubscribeCancelComponent,
-    SubscribeSuccessComponent
+    SubscribeSuccessComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -46,15 +57,38 @@ import { SubscribeSuccessComponent } from './subscription/subscribe-success/subs
     ReactiveFormsModule,
     HttpClientModule,
     NgxStripeModule.forRoot('pk_test_51I3vwwCAVxkeCX4QWqibRQITeb9iG4wNPE7sW1Wzb8KitLSEawyI4BC8e31r8ysznVfjenkD55PMLNNG1jAAh2d800nOn5T4yc'),
+    SocialLoginModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     MatTabsModule,
     MatIconModule,
     MatCardModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:44356"],
+        disallowedRoutes: []
+      }
+    })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '309562537686-76v59bdols77joh5fvto14a3ibu30u1f.apps.googleusercontent.com'
+            )
+          },
+        ],
+      } as SocialAuthServiceConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

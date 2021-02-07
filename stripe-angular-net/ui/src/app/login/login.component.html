@@ -1,0 +1,17 @@
+<h2>External Providers</h2>
+<div *ngIf="!isUserAuthenticated" style="padding: 20px;">
+    <button class="btn btn-info" type="button" (click)="externalLogin()">Sign in with Google</button>
+</div>
+
+<div *ngIf="isUserAuthenticated">
+    <h3 >User info:</h3>
+    <div>id: {{user.id}}</div>
+    <div>name: {{user.name}}</div>
+    <div>email: {{user.email}}</div>
+    <div>role: {{user.role}}</div>
+
+    <div style="padding: 20px;">
+        <button class="btn btn-info" type="button" (click)="externalLogout()">Sign out</button>
+    </div>
+</div>
+
