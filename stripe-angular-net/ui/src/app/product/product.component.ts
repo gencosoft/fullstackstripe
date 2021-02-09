@@ -1,18 +1,18 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { StripeService } from 'ngx-stripe';
 import { Subscription } from 'rxjs';
-import { Product } from '../../models/product';
-import { StripeDataService } from '../../services/stripe-data.service';
+import { Product } from '../models/product';
+import { StripeDataService } from '../services/stripe-data.service';
 
 @Component({
-  selector: 'app-product-1',
-  templateUrl: './product-1.component.html',
-  styleUrls: ['./product-1.component.css']
+  selector: 'app-product',
+  templateUrl: './product.component.html',
+  styleUrls: ['./product.component.css']
 })
-export class Product1Component implements OnDestroy{
-  product: Product;
-  isPrebuild: boolean;
+export class ProductComponent implements OnDestroy{
+  @Input() product: Product;
+  @Input("is-prebuild") isPrebuild: boolean;
   subscription: Subscription;
 
   constructor(

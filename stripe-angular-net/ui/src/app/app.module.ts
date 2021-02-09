@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxStripeModule } from 'ngx-stripe';
 import { HttpClientModule } from '@angular/common/http';
-import { PaymentComponent } from './payment/payment.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,8 +14,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import { Product1Component } from './products/product-1/product-1.component';
-import { Product2Component } from './products/product-2/product-2.component';
 import { CustomPaymentComponent } from './custom-payment/custom-payment.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { SuccessComponent } from './prebuild-checkout/success/success.component';
@@ -30,6 +27,9 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 import { LoginComponent } from './login/login.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { SubscriptionOptionsComponent } from './subscription/subscription-options/subscription-options.component';
+import { PrebuildCheckoutComponent } from './prebuild-checkout/prebuild-checkout.component';
+import { CustomFlowComponent } from './custom-flow/custom-flow.component';
+import { ProductComponent } from './product/product.component';
 
 
 export function tokenGetter() {
@@ -39,10 +39,7 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    PaymentComponent,
     NavbarComponent,
-    Product1Component,
-    Product2Component,
     CustomPaymentComponent,
     SubscriptionComponent,
     SuccessComponent,
@@ -50,7 +47,10 @@ export function tokenGetter() {
     SubscribeCancelComponent,
     SubscribeSuccessComponent,
     LoginComponent,
-    SubscriptionOptionsComponent
+    SubscriptionOptionsComponent,
+    PrebuildCheckoutComponent,
+    CustomFlowComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,

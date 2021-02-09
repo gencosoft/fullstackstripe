@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CustomFlowComponent } from './custom-flow/custom-flow.component';
 import { CustomPaymentComponent } from './custom-payment/custom-payment.component';
-import { LoginComponent } from './login/login.component';
 import { CancelComponent } from './prebuild-checkout/cancel/cancel.component';
+import { PrebuildCheckoutComponent } from './prebuild-checkout/prebuild-checkout.component';
 import { SuccessComponent } from './prebuild-checkout/success/success.component';
-import { Product1Component } from './products/product-1/product-1.component';
-import { Product2Component } from './products/product-2/product-2.component';
 import { SubscribeCancelComponent } from './subscription/subscribe-cancel/subscribe-cancel.component';
 import { SubscribeSuccessComponent } from './subscription/subscribe-success/subscribe-success.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 
 const routes: Routes = [
-  { path: '', component: Product2Component},
-  { path: 'custom-flow', component: Product2Component},
-  { path: 'prebuild-checkout', component: Product1Component},
+  { path: '', component: CustomFlowComponent},
+  { path: 'custom-flow', component: CustomFlowComponent},
+  { path: 'prebuild-checkout', component: PrebuildCheckoutComponent},
   { path: 'prebuild-checkout/success', component: SuccessComponent},
   { path: 'prebuild-checkout/cancel', component: CancelComponent},
   { path: 'custom-payment', component: CustomPaymentComponent},
