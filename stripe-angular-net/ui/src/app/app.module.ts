@@ -29,6 +29,7 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { LoginComponent } from './login/login.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { SubscriptionOptionsComponent } from './subscription/subscription-options/subscription-options.component';
 
 
 export function tokenGetter() {
@@ -48,7 +49,8 @@ export function tokenGetter() {
     CancelComponent,
     SubscribeCancelComponent,
     SubscribeSuccessComponent,
-    LoginComponent
+    LoginComponent,
+    SubscriptionOptionsComponent
   ],
   imports: [
     BrowserModule,

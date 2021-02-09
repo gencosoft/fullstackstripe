@@ -17,8 +17,7 @@ const routes: Routes = [
   { path: 'prebuild-checkout/success', component: SuccessComponent},
   { path: 'prebuild-checkout/cancel', component: CancelComponent},
   { path: 'custom-payment', component: CustomPaymentComponent},
-  { path: 'subscription', component: LoginComponent},
-  // { path: 'subscription', component: SubscriptionComponent},
+  { path: 'subscription', component: SubscriptionComponent},
   { path: 'subscription/success', component: SubscribeSuccessComponent},
   { path: 'subscription/cancel', component: SubscribeCancelComponent}
 ];
