@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PaymentSystem.Models;
+using PaymentSystem.Api.Models;
 using Stripe;
 using Stripe.Checkout;
 
-namespace PaymentSystem.Controllers
+namespace PaymentSystem.Api.Controllers
 {
-    [Route("api/stripe")]
     [ApiController]
+    [Route("api/stripe")]
     public class StripeController : Controller
     {
         [HttpPost("token")]

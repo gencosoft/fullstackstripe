@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PaymentSystem.Models;
-using PaymentSystem.Services;
+using PaymentSystem.Api.Models;
+using PaymentSystem.Services.Authentication;
 
-namespace PaymentSystem.Controllers
+namespace PaymentSystem.Api.Controllers
 {
-    [Route("api/account")]
     [ApiController]
+    [Route("api/account")]
     public class AccountController : Controller
     {
         private readonly JwtHandler _jwtHandler;
@@ -21,7 +21,7 @@ namespace PaymentSystem.Controllers
         [HttpPost("external-login")]
         public async Task<IActionResult> ExternalLogin([FromBody] ExternalAuthDto externalAuth)
         {
-            var payload = await _jwtHandler.VerifyGoogleToken(externalAuth);
+            var payload = await _jwtHandler.VerifyGoogleToken(externalAuth.IdToken);
             if (payload == null)
                 return BadRequest("Invalid External Authentication.");
             var info = new UserLoginInfo(externalAuth.Provider, payload.Subject, externalAuth.Provider);
@@ -52,7 +52,7 @@ namespace PaymentSystem.Controllers
                 new Claim(ClaimTypes.Role, "Viewer")
             });
 
-            var token = await _jwtHandler.GenerateToken(user, claims);
+            var token = await _jwtHandler.GenerateToken(claims);
             return Ok(new AuthResponseDto { Token = token, IsAuthSuccessful = true });
         }
     }

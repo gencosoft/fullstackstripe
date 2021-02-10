@@ -1,6 +1,4 @@
-﻿using System.Security.AccessControl;
-
-namespace PaymentSystem.Models
+﻿namespace PaymentSystem.Api.Models
 {
     public class SubscriptionSessionModel
     {

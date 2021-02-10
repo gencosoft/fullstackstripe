@@ -11,5 +11,10 @@
     <PackageReference Include="Stripe.net" Version="39.31.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PaymentSystem.Data\PaymentSystem.Data.csproj" />
+    <ProjectReference Include="..\PaymentSystem.Services\PaymentSystem.Services.csproj" />
+  </ItemGroup>
+
 
 </Project>

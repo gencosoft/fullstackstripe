@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using PaymentSystem.Models;
 
-namespace PaymentSystem.Services
+namespace PaymentSystem.Services.Authentication
 {
     public class JwtHandler
     {
@@ -22,7 +21,7 @@ namespace PaymentSystem.Services
             _jwtSettings = configuration.GetSection("JwtSettings");
         }
 
-        public async Task<GoogleJsonWebSignature.Payload> VerifyGoogleToken(ExternalAuthDto externalAuth)
+        public async Task<GoogleJsonWebSignature.Payload> VerifyGoogleToken(string idToken)
         {
             try
             {
@@ -30,7 +29,7 @@ namespace PaymentSystem.Services
                 {
                     Audience = new List<string> { _goolgeSettings.GetSection("clientId").Value }
                 };
-                var payload = await GoogleJsonWebSignature.ValidateAsync(externalAuth.IdToken, settings);
+                var payload = await GoogleJsonWebSignature.ValidateAsync(idToken, settings);
                 return payload;
             }
             catch (Exception ex)
@@ -40,7 +39,7 @@ namespace PaymentSystem.Services
             }
         }
 
-        public async Task<string> GenerateToken(User user, ClaimsIdentity claims)
+        public async Task<string> GenerateToken(ClaimsIdentity claims)
         {
             var key = Encoding.UTF8.GetBytes(_jwtSettings.GetSection("securityKey").Value);
             var secret = new SymmetricSecurityKey(key);

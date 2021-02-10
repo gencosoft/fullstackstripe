@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace PaymentSystem.Models
+namespace PaymentSystem.Api.Models
 {
     public class User : IdentityUser
     {
