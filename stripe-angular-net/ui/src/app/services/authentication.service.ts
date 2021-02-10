@@ -26,7 +26,7 @@ export class AuthenticationService {
     let decodedToken = this._jwtHelper.decodeToken(
       localStorage.getItem("token")
     );
-    
+    if (decodedToken == null) return null;
     return {
       name: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
       email: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],

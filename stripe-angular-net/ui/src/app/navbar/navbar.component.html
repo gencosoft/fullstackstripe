@@ -6,5 +6,9 @@
     {{link.label}} 
   </button>
   <a href="https://dashboard.stripe.com/test/dashboard" class="btn btn-primary nav-button">STRIPE DASHBOARD<mat-icon class="icon">launch</mat-icon></a>
-  <button *ngIf="isUserAuthenticated" class="btn btn-success nav-button" (click)="logout()">Logout</button>
+  <button *ngIf="isUserAuthenticated" class="btn btn-success nav-button" [matMenuTriggerFor]="menu" >{{user?.name}}</button>
 </nav>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="navigate('/profile')">Profile</button>
+  <button mat-menu-item (click)="logout()">Logout</button>
+</mat-menu>

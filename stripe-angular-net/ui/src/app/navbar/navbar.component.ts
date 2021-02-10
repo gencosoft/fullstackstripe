@@ -9,6 +9,7 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class NavbarComponent implements OnInit{
 
+  user;
   isUserAuthenticated: boolean;
 
   links = [
@@ -22,10 +23,11 @@ export class NavbarComponent implements OnInit{
   
   ngOnInit(): void {
     this.isUserAuthenticated = this._authService.isUserAuthenticated();
-    
+    this.user = this._authService.getUser();
     this._authService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;
+        this.user = this._authService.getUser();
       });
   }
 

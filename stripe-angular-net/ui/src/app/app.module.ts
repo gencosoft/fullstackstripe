@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import {MatMenuModule} from '@angular/material/menu';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
@@ -30,6 +31,7 @@ import { SubscriptionOptionsComponent } from './subscription/subscription-option
 import { PrebuildCheckoutComponent } from './prebuild-checkout/prebuild-checkout.component';
 import { CustomFlowComponent } from './custom-flow/custom-flow.component';
 import { ProductComponent } from './product/product.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 export function tokenGetter() {
@@ -50,7 +52,8 @@ export function tokenGetter() {
     SubscriptionOptionsComponent,
     PrebuildCheckoutComponent,
     CustomFlowComponent,
-    ProductComponent
+    ProductComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ export function tokenGetter() {
     MatCardModule,
     MatButtonModule,
     MatInputModule,
+    MatMenuModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -84,7 +88,7 @@ export function tokenGetter() {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '309562537686-76v59bdols77joh5fvto14a3ibu30u1f.apps.googleusercontent.com'
+              '730331897127-mgfpe7rkcgi1u9j28adpl321i75s0eo8.apps.googleusercontent.com'
             )
           },
         ],

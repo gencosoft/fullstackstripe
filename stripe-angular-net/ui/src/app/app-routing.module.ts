@@ -5,6 +5,8 @@ import { CustomPaymentComponent } from './custom-payment/custom-payment.componen
 import { CancelComponent } from './prebuild-checkout/cancel/cancel.component';
 import { PrebuildCheckoutComponent } from './prebuild-checkout/prebuild-checkout.component';
 import { SuccessComponent } from './prebuild-checkout/success/success.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AuthGuardService } from './services/auth-guard.service';
 import { SubscribeCancelComponent } from './subscription/subscribe-cancel/subscribe-cancel.component';
 import { SubscribeSuccessComponent } from './subscription/subscribe-success/subscribe-success.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
@@ -18,7 +20,8 @@ const routes: Routes = [
   { path: 'custom-payment', component: CustomPaymentComponent},
   { path: 'subscription', component: SubscriptionComponent},
   { path: 'subscription/success', component: SubscribeSuccessComponent},
-  { path: 'subscription/cancel', component: SubscribeCancelComponent}
+  { path: 'subscription/cancel', component: SubscribeCancelComponent},
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({
