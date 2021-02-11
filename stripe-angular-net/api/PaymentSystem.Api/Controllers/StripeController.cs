@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PaymentSystem.Api.Models;
+using PaymentSystem.Data.Entities;
 using Stripe;
 using Stripe.Checkout;
 
@@ -12,6 +16,13 @@ namespace PaymentSystem.Api.Controllers
     [Route("api/stripe")]
     public class StripeController : Controller
     {
+        private readonly PaymentContext _context;
+
+        public StripeController(PaymentContext context)
+        {
+            _context = context;
+        }
+
         [HttpPost("token")]
         public IActionResult ChargePayment(StripeDataModel data)
         {
@@ -63,8 +74,9 @@ namespace PaymentSystem.Api.Controllers
             return Json(new { id = session.Id });
         }
 
+        [Authorize]
         [HttpPost("subscription-session")]
-        public async Task<IActionResult> CreateCheckoutSession([FromBody] SubscriptionSessionModel data)
+        public async Task<IActionResult> CreateSubscriptionSession([FromBody] SubscriptionSessionModel data)
         {
             var options = new SessionCreateOptions
             {
@@ -102,12 +114,18 @@ namespace PaymentSystem.Api.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("subscription-session")]
-        public async Task<IActionResult> CheckoutSession(string sessionId)
+        public async Task<IActionResult> GetSessionInfo(string sessionId)
         {
+            var success = int.TryParse(
+                User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.UserData)?.Value, out var loginId);
+            if (!success) return Unauthorized();
+
+
             var service = new SessionService();
             var session = await service.GetAsync(sessionId);
-
+            
             return Ok(new SubscriptionSessionModel
             {
                 SessionId = sessionId,
@@ -115,6 +133,7 @@ namespace PaymentSystem.Api.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost("customer-portal")]
         public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalModel data)
         {

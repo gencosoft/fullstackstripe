@@ -1,8 +1,10 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PaymentSystem.Api.Models;
+using PaymentSystem.Data.Entities;
 using PaymentSystem.Services.Authentication;
 
 namespace PaymentSystem.Api.Controllers
@@ -12,10 +14,12 @@ namespace PaymentSystem.Api.Controllers
     public class AccountController : Controller
     {
         private readonly JwtHandler _jwtHandler;
+        private readonly PaymentContext _context;
 
-        public AccountController(JwtHandler jwtHandler)
+        public AccountController(JwtHandler jwtHandler, PaymentContext context)
         {
             _jwtHandler = jwtHandler;
+            _context = context;
         }
 
         [HttpPost("external-login")]
@@ -26,27 +30,25 @@ namespace PaymentSystem.Api.Controllers
                 return BadRequest("Invalid External Authentication.");
             var info = new UserLoginInfo(externalAuth.Provider, payload.Subject, externalAuth.Provider);
 
-            var user = new User { Id = 123, Email = payload.Email, UserName = payload.Name};
-            //var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
-            //if (user == null)
-            //{
-            //    user = await _userManager.FindByEmailAsync(payload.Email);
-            //    if (user == null)
-            //    {
-            //        user = new User { Email = payload.Email, UserName = payload.Email };
-            //        await _userManager.CreateAsync(user);
-            //        //prepare and send an email for the email confirmation
-            //        await _userManager.AddToRoleAsync(user, "Viewer");
-            //        await _userManager.AddLoginAsync(user, info);
-            //    }
-            //    else
-            //    {
-            //        await _userManager.AddLoginAsync(user, info);
-            //    }
-            //}
+            var user = _context.ExternalLogin
+                .FirstOrDefault(x => x.Provider.Equals(info.LoginProvider) && x.ProviderId.Equals(info.ProviderKey));
+
+            if (user == null)
+            {
+                user = new ExternalLogin
+                {
+                    Email = payload.Email,
+                    Username = payload.Name,
+                    Provider = info.LoginProvider,
+                    ProviderId = info.ProviderKey
+                };
+                await _context.ExternalLogin.AddAsync(user);
+                await _context.SaveChangesAsync();
+            }
+
             var claims = new ClaimsIdentity(new []
             {
-                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.UserData, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, "Viewer")

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using PaymentSystem.Data.Entities;
 using PaymentSystem.Services.Authentication;
 using Stripe;
 
@@ -49,6 +50,8 @@ namespace PaymentSystem.Api
 
             services.AddScoped<JwtHandler>();
 
+            services.AddScoped<PaymentContext>();
+
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
@@ -81,6 +84,7 @@ namespace PaymentSystem.Api
 
             app.UseCors();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
