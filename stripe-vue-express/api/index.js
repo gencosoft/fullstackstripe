@@ -5,7 +5,6 @@ const Stripe = require("stripe");
 if (process.env.NODE_ENV !== "PROD") {
   require("dotenv").config();
 }
-console.log("ENVIRONMENT IS " + process.env.NODE_ENV);
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 var cors = require("cors");
@@ -18,6 +17,13 @@ const calculateOrderAmount = (amount) => {
   // people from directly manipulating the amount on the client
   return amount * 100;
 };
+
+/**
+ * Health endpoint
+ */
+app.get("/health", async (req, res) => {
+  return res.status(200).send("API is up and running!");
+});
 
 /**
  * Creates A Custom Payment Intent
