@@ -1,6 +1,6 @@
-﻿namespace PaymentSystem.Api.Models
+﻿namespace PaymentSystem.Services.Payment.Models
 {
-    public class StripeDataModel
+    public class ChargePaymentModel
     {
         public string Token { get; set; }
         public string Description { get; set; }

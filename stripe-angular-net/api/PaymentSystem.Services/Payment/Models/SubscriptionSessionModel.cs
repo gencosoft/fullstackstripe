@@ -1,4 +1,4 @@
-﻿namespace PaymentSystem.Api.Models
+﻿namespace PaymentSystem.Services.Payment.Models
 {
     public class SubscriptionSessionModel
     {

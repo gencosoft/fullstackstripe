@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using PaymentSystem.Data.Entities;
 using PaymentSystem.Services.Authentication;
-using Stripe;
+using PaymentSystem.Services.Payment;
 
 namespace PaymentSystem.Api
 {
@@ -49,6 +49,7 @@ namespace PaymentSystem.Api
                 });
 
             services.AddScoped<JwtHandler>();
+            services.AddScoped<StripeService>();
 
             services.AddScoped<PaymentContext>();
 
@@ -70,9 +71,6 @@ namespace PaymentSystem.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // This is your real test secret API key.
-            StripeConfiguration.ApiKey = Configuration.GetSection("StripeSettings").GetSection("apiKey").Value; 
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -1,6 +1,6 @@
-﻿namespace PaymentSystem.Api.Models
+﻿namespace PaymentSystem.Services.Payment.Models
 {
-    public class ProductModel
+    public class CheckoutSessionModel
     {
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }
