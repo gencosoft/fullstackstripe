@@ -1,6 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { StripeService } from 'ngx-stripe';
+import { userInfo } from 'os';
 import { Subscription } from 'rxjs';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StripeDataService } from 'src/app/services/stripe-data.service';
 
 @Component({
@@ -17,6 +19,7 @@ export class SubscriptionOptionsComponent implements OnDestroy{
   subscription: Subscription;
 
   constructor(
+    private _authService: AuthenticationService,
     private _stripeService: StripeService,
     private _dataService: StripeDataService) {
     this.costBasic = 5;
@@ -40,8 +43,10 @@ export class SubscriptionOptionsComponent implements OnDestroy{
   }
 
   subscribe(priceId){
+    let user = this._authService.getUser();
+    
     this.subscription = this._dataService
-      .createSubscriptionSession({PriceId: priceId})
+      .createSubscriptionSession({PriceId: priceId, CustomerId: user.id})
       .subscribe(x => {
         this._stripeService.redirectToCheckout({sessionId: x.sessionId})
           .subscribe(x => {

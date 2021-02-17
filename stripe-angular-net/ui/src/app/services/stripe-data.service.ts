@@ -29,7 +29,11 @@ export class StripeDataService {
     return this.http.get(environment.baseApiUrl + '/stripe/subscription-session?sessionId=' + sessionId);
   }
 
-  createCustomerPortalSession(sessionId): Observable<any>{
-    return this.http.post(environment.baseApiUrl + '/stripe/customer-portal', sessionId);
+  createCustomerPortalSession(customerId): Observable<any>{
+    return this.http.post(environment.baseApiUrl + '/stripe/customer-portal', customerId);
+  }
+
+  getCustomerSubscriptions(customerId): Observable<any>{
+    return this.http.get(environment.baseApiUrl + '/stripe/subscriptions/' + customerId);
   }
 }

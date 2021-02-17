@@ -32,6 +32,7 @@ import { PrebuildCheckoutComponent } from './prebuild-checkout/prebuild-checkout
 import { CustomFlowComponent } from './custom-flow/custom-flow.component';
 import { ProductComponent } from './product/product.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UserSubscriptionsComponent } from './subscription/user-subscriptions/user-subscriptions.component';
 
 
 export function tokenGetter() {
@@ -53,7 +54,8 @@ export function tokenGetter() {
     PrebuildCheckoutComponent,
     CustomFlowComponent,
     ProductComponent,
-    ProfileComponent
+    ProfileComponent,
+    UserSubscriptionsComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PaymentSystem.Api.Models;
 using PaymentSystem.Data.Entities;
 using PaymentSystem.Services.Authentication;
+using PaymentSystem.Services.Payment;
 
 namespace PaymentSystem.Api.Controllers
 {
@@ -14,11 +15,14 @@ namespace PaymentSystem.Api.Controllers
     public class AccountController : Controller
     {
         private readonly JwtHandler _jwtHandler;
-        private readonly PaymentContext _context;
+        private readonly PaymentContext _context; 
+        private readonly StripeService _stripeService;
 
-        public AccountController(JwtHandler jwtHandler, PaymentContext context)
+
+        public AccountController(JwtHandler jwtHandler, StripeService stripeService, PaymentContext context)
         {
             _jwtHandler = jwtHandler;
+            _stripeService = stripeService;
             _context = context;
         }
 
@@ -46,10 +50,24 @@ namespace PaymentSystem.Api.Controllers
                 await _context.SaveChangesAsync();
             }
 
+            var stripeCustomer = _context.StripeCustomer.FirstOrDefault(x => x.LoginId == user.Id);
+            if (stripeCustomer == null)
+            {
+                var stripeCustomerId = _stripeService.CreateNewCustomer(user.Email);
+
+                stripeCustomer = new StripeCustomer
+                {
+                    LoginId = user.Id,
+                    StripeCustomerId = stripeCustomerId
+                };
+                await _context.StripeCustomer.AddAsync(stripeCustomer);
+                await _context.SaveChangesAsync();
+            }
+
             var claims = new ClaimsIdentity(new []
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.UserData, user.Id.ToString()),
+                new Claim(ClaimTypes.UserData, stripeCustomer.StripeCustomerId),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, "Viewer")
             });

@@ -6,10 +6,10 @@ import { AuthenticationService } from '../services/authentication.service';
   templateUrl: './subscription.component.html',
   styleUrls: ['./subscription.component.css']
 })
-export class SubscriptionComponent implements OnInit{
+export class SubscriptionComponent implements OnInit {
   isUserAuthenticated: boolean;
   
-  constructor(private _authService: AuthenticationService){ }
+  constructor(private _authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.isUserAuthenticated = this._authService.isUserAuthenticated();
@@ -19,5 +19,4 @@ export class SubscriptionComponent implements OnInit{
         this.isUserAuthenticated = res;
       });
   }
-
 }

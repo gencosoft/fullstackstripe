@@ -88,6 +88,7 @@ namespace PaymentSystem.Services.Payment
                 CancelUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/subscription/cancel",
                 PaymentMethodTypes = new List<string> { "card" },
                 Mode = "subscription",
+                Customer = data.CustomerId,
                 LineItems = new List<SessionLineItemOptions>
                 {
                     new SessionLineItemOptions
@@ -134,19 +135,13 @@ namespace PaymentSystem.Services.Payment
 
         public async Task<CustomerPortalResult> CustomerPortal([FromBody] CustomerPortalModel data)
         {
-            // For demonstration purposes, we're using the Checkout session to retrieve the customer ID.
-            // Typically this is stored alongside the authenticated user in your database.
-            var checkoutSessionId = data.SessionId;
-            var checkoutService = new SessionService();
-            var checkoutSession = await checkoutService.GetAsync(checkoutSessionId);
-
             // This is the URL to which your customer will return after
             // they are done managing billing in the Customer Portal.
             var returnUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/subscription";
 
             var options = new Stripe.BillingPortal.SessionCreateOptions
             {
-                Customer = checkoutSession.CustomerId,
+                Customer = data.CustomerId,
                 ReturnUrl = returnUrl
             };
             var service = new Stripe.BillingPortal.SessionService();
@@ -156,6 +151,33 @@ namespace PaymentSystem.Services.Payment
             {
                 Success = true,
                 Url = session.Url
+            };
+        }
+
+        public string CreateNewCustomer(string email)
+        {
+            var options = new CustomerCreateOptions { Email = email };
+            var service = new CustomerService();
+            var customer = service.Create(options);
+
+            return customer.Id;
+        }
+
+        public async Task<CustomerSubscriptionResult> GetSubscriptions(string customerId)
+        {
+            var result = new CustomerSubscriptionModel { CustomerId = customerId, Subscriptions = new List<string>() };
+
+            var options = new SubscriptionListOptions { Customer = customerId };
+            var service = new SubscriptionService();
+            var subscriptions = await service.ListAsync(options);
+
+            foreach (var subscription in subscriptions)
+                result.Subscriptions.Add(subscription.Id);
+
+            return new CustomerSubscriptionResult
+            {
+                Success = true,
+                CustomerSubscriptions = result
             };
         }
     }

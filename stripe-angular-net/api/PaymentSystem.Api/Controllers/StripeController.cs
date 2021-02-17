@@ -41,6 +41,17 @@ namespace PaymentSystem.Api.Controllers
         }
 
         [Authorize]
+        [HttpGet("subscriptions/{customerId}")]
+        public async Task<IActionResult> GetSubscriptions(string customerId)
+        {
+            var result = await _stripeService.GetSubscriptions(customerId);
+
+            if (!result.Success) return BadRequest(result.ErrorMessage);
+
+            return Ok(result.CustomerSubscriptions);
+        }
+
+        [Authorize]
         [HttpPost("subscription-session")]
         public async Task<IActionResult> CreateSubscriptionSession([FromBody] SubscriptionSessionModel data)
         {
