@@ -33,7 +33,7 @@ export class StripeDataService {
     return this.http.post(environment.baseApiUrl + '/stripe/customer-portal', customerId);
   }
 
-  getCustomerSubscriptions(customerId): Observable<any>{
-    return this.http.get(environment.baseApiUrl + '/stripe/subscriptions/' + customerId);
+  getMySubscriptions(): Observable<any>{
+    return this.http.get(environment.baseApiUrl + '/stripe/my-subscriptions');
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomerSubscriptions } from 'src/app/models/customer-subscriptions';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StripeDataService } from 'src/app/services/stripe-data.service';
 
@@ -9,19 +8,15 @@ import { StripeDataService } from 'src/app/services/stripe-data.service';
   styleUrls: ['./user-subscriptions.component.css']
 })
 export class UserSubscriptionsComponent implements OnInit {
-
-  user;
-  customerSubscription: CustomerSubscriptions;
+  customerSubscription;
 
   constructor(
     private _authService: AuthenticationService,
     private _dataService: StripeDataService) { }
 
   ngOnInit(): void {
-    this.user = this._authService.getUser();
-    
     this._dataService
-      .getCustomerSubscriptions(this.user.id)
+      .getMySubscriptions()
       .subscribe(x => {
         this.customerSubscription = x;
       }, err => {
@@ -30,8 +25,9 @@ export class UserSubscriptionsComponent implements OnInit {
   }
 
   manageSubscription(){
+    let user = this._authService.getUser();
     this._dataService
-      .createCustomerPortalSession({CustomerId: this.user.id})
+      .createCustomerPortalSession({CustomerId: user.id})
       .subscribe(x => {
         window.location.href = x.url;
       }, err => {

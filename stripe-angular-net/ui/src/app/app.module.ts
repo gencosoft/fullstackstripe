@@ -76,7 +76,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:44356"],
+        allowedDomains: ["localhost:44356", "gencosoft-paymentapi.azurewebsites.net"],
         disallowedRoutes: []
       }
     })

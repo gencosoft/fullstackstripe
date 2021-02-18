@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PaymentSystem.Data.Entities;
 using PaymentSystem.Services.Payment;
 using PaymentSystem.Services.Payment.Models;
 
@@ -13,12 +12,10 @@ namespace PaymentSystem.Api.Controllers
     [Route("api/stripe")]
     public class StripeController : Controller
     {
-        private readonly PaymentContext _context;
         private readonly StripeService _stripeService;
 
-        public StripeController(PaymentContext context, StripeService stripeService)
+        public StripeController(StripeService stripeService)
         {
-            _context = context;
             _stripeService = stripeService;
         }
 
@@ -40,10 +37,12 @@ namespace PaymentSystem.Api.Controllers
             return Ok(result);
         }
 
-        //[Authorize]
-        [HttpGet("subscriptions/{customerId}")]
-        public async Task<IActionResult> GetSubscriptions(string customerId)
+        [Authorize]
+        [HttpGet("my-subscriptions")]
+        public async Task<IActionResult> GetSubscriptions()
         {
+            var customerId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.UserData)?.Value;
+
             var result = await _stripeService.GetSubscriptions(customerId);
 
             if (!result.Success) return BadRequest(result.ErrorMessage);
@@ -66,10 +65,6 @@ namespace PaymentSystem.Api.Controllers
         [HttpGet("subscription-session")]
         public async Task<IActionResult> GetSessionInfo(string sessionId)
         {
-            var authorized = int.TryParse(
-                User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.UserData)?.Value, out var loginId);
-            if (!authorized) return Unauthorized();
-
             var result = await _stripeService.GetSessionInfo(sessionId);
 
             if (!result.Success) return BadRequest(result.ErrorMessage);

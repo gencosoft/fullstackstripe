@@ -20,9 +20,11 @@ namespace PaymentSystem.Data.Entities
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            var envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json", optional: false)
+                .AddJsonFile($"appsettings.{envName}.json", optional: false)
                 .Build();
 
             if (!optionsBuilder.IsConfigured)

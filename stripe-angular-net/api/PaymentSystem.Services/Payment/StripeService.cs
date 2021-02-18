@@ -11,15 +11,18 @@ namespace PaymentSystem.Services.Payment
 {
     public class StripeService
     {
+        private readonly IConfigurationRoot _configuration;
         public StripeService()
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
+            var envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            _configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json", optional: false)
+                .AddJsonFile($"appsettings.{envName}.json", optional: false)
                 .Build();
 
-            // This is your real test secret API key.
-            StripeConfiguration.ApiKey = configuration.GetSection("StripeSettings").GetSection("apiKey").Value;
+            StripeConfiguration.ApiKey = _configuration.GetSection("StripeSettings").GetSection("apiKey").Value;
         }
 
         public bool ChargePayment(ChargePaymentModel data)
@@ -31,7 +34,7 @@ namespace PaymentSystem.Services.Payment
                 Currency = data.Currency,
                 Source = data.Token,
                 Description = data.Description,
-                Metadata = new Dictionary<string, string> { { "email", data.Email } }
+                Metadata = new Dictionary<string, string> {{ "email", data.Email }}
             });
 
             return result.Status != "failed";
@@ -39,9 +42,10 @@ namespace PaymentSystem.Services.Payment
 
         public CheckOutSessionResult CreateCheckoutSession(CheckoutSessionModel data)
         {
+            var baseUrl = _configuration.GetSection("BaseUrl").Value;
             var options = new SessionCreateOptions
             {
-                PaymentMethodTypes = new List<string> { "card" },
+                PaymentMethodTypes = new List<string> {"card"},
                 LineItems = new List<SessionLineItemOptions>
                 {
                     new SessionLineItemOptions
@@ -61,8 +65,8 @@ namespace PaymentSystem.Services.Payment
                     }
                 },
                 Mode = "payment",
-                SuccessUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/prebuild-checkout/success",
-                CancelUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/prebuild-checkout/cancel"
+                SuccessUrl = $"{baseUrl}/prebuild-checkout/success",
+                CancelUrl = $"{baseUrl}/prebuild-checkout/cancel"
             };
 
             var service = new SessionService();
@@ -77,15 +81,11 @@ namespace PaymentSystem.Services.Payment
 
         public async Task<SubscriptionSessionResult> CreateSubscriptionSession([FromBody] SubscriptionSessionModel data)
         {
+            var baseUrl = _configuration.GetSection("BaseUrl").Value;
             var options = new SessionCreateOptions
             {
-                // See https://stripe.com/docs/api/checkout/sessions/create
-                // for additional parameters to pass.
-                // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
-                // the actual Session ID is returned in the query parameter when your customer
-                // is redirected to the success page.
-                SuccessUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/subscription/success?sessionId={CHECKOUT_SESSION_ID}",
-                CancelUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/subscription/cancel",
+                SuccessUrl = $"{baseUrl}/subscription/success?sessionId={{CHECKOUT_SESSION_ID}}",
+                CancelUrl = $"{baseUrl}/subscription/cancel",
                 PaymentMethodTypes = new List<string> { "card" },
                 Mode = "subscription",
                 Customer = data.CustomerId,
@@ -135,9 +135,7 @@ namespace PaymentSystem.Services.Payment
 
         public async Task<CustomerPortalResult> CustomerPortal([FromBody] CustomerPortalModel data)
         {
-            // This is the URL to which your customer will return after
-            // they are done managing billing in the Customer Portal.
-            var returnUrl = "http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/subscription";
+            var returnUrl = $"{_configuration.GetSection("BaseUrl").Value}/subscription";
 
             var options = new Stripe.BillingPortal.SessionCreateOptions
             {
