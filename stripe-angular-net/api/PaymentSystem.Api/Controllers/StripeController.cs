@@ -40,7 +40,7 @@ namespace PaymentSystem.Api.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("subscriptions/{customerId}")]
         public async Task<IActionResult> GetSubscriptions(string customerId)
         {

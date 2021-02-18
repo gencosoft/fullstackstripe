@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { StripeService } from 'ngx-stripe';
-import { userInfo } from 'os';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StripeDataService } from 'src/app/services/stripe-data.service';
