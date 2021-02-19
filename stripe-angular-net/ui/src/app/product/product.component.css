@@ -3,8 +3,12 @@
     margin-top: 25px;
 }
 
+.mat-card-image{
+    height: 22rem;
+}
+
 .primary{
-    color: #673ab7;
+    color: #3F51B5;
 }
 
 .large{

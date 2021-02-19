@@ -1,14 +1,21 @@
-<nav mat-tab-nav-bar backgroundColor="primary" mat-align-tabs="end">
-  <button
-    *ngFor="let link of links"
-    class="btn btn-danger nav-button"
-    (click)="navigate(link.route)">
-    {{link.label}} 
-  </button>
-  <a href="https://dashboard.stripe.com/test/dashboard" class="btn btn-primary nav-button">STRIPE DASHBOARD<mat-icon class="icon">launch</mat-icon></a>
-  <button *ngIf="isUserAuthenticated" class="btn btn-success nav-button" [matMenuTriggerFor]="menu" >{{user?.name}}</button>
+<nav mat-tab-nav-bar backgroundColor="primary">
+  <div fxLayout="row" style="width: 100%;" fxLayoutAlign="space-between center">
+    <div>
+      <a mat-tab-link routerLink="/"><img class="nav-icon" src="assets/angular.png"></a>
+      <a mat-tab-link 
+        *ngFor="let link of links"
+        (click)="activeLink = link"
+        [active]="activeLink == link"
+        [routerLink]="link.route"> {{link.label}} </a>
+    </div>
+    <div>
+      <a mat-tab-link href="https://dashboard.stripe.com/test/dashboard">STRIPE DASHBOARD<mat-icon class="icon">launch</mat-icon></a>
+      <button *ngIf="isUserAuthenticated" color="primary" mat-flat-button [matMenuTriggerFor]="menu"><img class="nav-icon" [src]="user?.photoUrl" alt="avatar">{{user?.name}}</button>
+    </div>
+  </div>
+  
 </nav>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="navigate('/profile')">Profile</button>
+  <button mat-menu-item (click)="loadProfile()">Profile</button>
   <button mat-menu-item (click)="logout()">Logout</button>
 </mat-menu>

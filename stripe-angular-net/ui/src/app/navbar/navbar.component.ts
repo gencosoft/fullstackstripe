@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit{
 
   user;
   isUserAuthenticated: boolean;
-
   links = [
     {label:'PREBUILD CHECKOUT FLOW', route:'/prebuild-checkout'}, 
     {label:'CUSTOM PAYMENT FLOW', route:'/custom-flow'},
@@ -31,11 +31,7 @@ export class NavbarComponent implements OnInit{
       });
   }
 
-  navigate(route){
-    this._router.navigate([route]);
-  }
+  loadProfile = () => this._router.navigate(['/profile']);
 
-  public logout = () => {
-    this._authService.signOutExternal();
-  }
+  logout = () => this._authService.signOutExternal();
 }

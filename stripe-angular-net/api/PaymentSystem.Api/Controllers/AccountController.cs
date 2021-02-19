@@ -69,6 +69,7 @@ namespace PaymentSystem.Api.Controllers
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.UserData, stripeCustomer.StripeCustomerId),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Uri, payload.Picture), 
                 new Claim(ClaimTypes.Role, "Viewer")
             });
 

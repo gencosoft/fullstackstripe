@@ -31,6 +31,7 @@ export class AuthenticationService {
       name: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
       email: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],
       id: decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata"],
+      photoUrl: decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri"],
       role: decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
     };
   }
