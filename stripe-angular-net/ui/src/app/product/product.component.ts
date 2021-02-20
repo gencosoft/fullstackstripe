@@ -14,6 +14,7 @@ export class ProductComponent implements OnDestroy{
   @Input() product: Product;
   @Input("is-prebuild") isPrebuild: boolean;
   subscription: Subscription;
+  loading: boolean;
 
   constructor(
     private _router: Router,
@@ -41,6 +42,7 @@ export class ProductComponent implements OnDestroy{
 
   proceed(){
     if(this.isPrebuild){ 
+      this.loading = true;
       this.subscription = this._dataService
         .createPaymentSession(this.product)
         .subscribe(x => {
@@ -48,9 +50,11 @@ export class ProductComponent implements OnDestroy{
             .subscribe(x => {
             }, err => {
               console.log('error-prebuild-session', err);
+              this.loading = false;
             });
         }, err => {
           console.log('error-prebuild-session', err);
+          this.loading = false;
         });
     } else{
       this._router.navigate(['/custom-payment'], {state:{quantity: this.product.Quantity, cost: this.product.Amount}});

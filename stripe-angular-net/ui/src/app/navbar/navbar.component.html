@@ -10,7 +10,7 @@
     </div>
     <div>
       <a mat-tab-link href="https://dashboard.stripe.com/test/dashboard">STRIPE DASHBOARD<mat-icon class="icon">launch</mat-icon></a>
-      <button *ngIf="isUserAuthenticated" color="primary" mat-flat-button [matMenuTriggerFor]="menu"><img class="nav-icon" [src]="user?.photoUrl" alt="avatar">{{user?.name}}</button>
+      <button *ngIf="isUserAuthenticated" color="primary" mat-flat-button [matMenuTriggerFor]="menu"><img class="profile-icon" [src]="user?.photoUrl" alt="avatar">{{user?.name}}</button>
     </div>
   </div>
   

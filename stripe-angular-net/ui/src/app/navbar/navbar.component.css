@@ -2,6 +2,10 @@
     margin-bottom: 50px !important;
 }
 
+button{
+    outline:none !important;
+}
+
 a:hover{
     text-decoration: none;
 }
@@ -9,6 +13,13 @@ a:hover{
 .nav-icon{
     height: 50px;
     width: 50px;    
+}
+
+.profile-icon{
+    border-radius: 15px;
+    margin-right: 0.5rem;
+    height: 50px;
+    width: 50px;
 }
 
 .nav-button{

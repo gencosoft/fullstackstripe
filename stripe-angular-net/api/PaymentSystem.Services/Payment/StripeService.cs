@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -163,14 +164,25 @@ namespace PaymentSystem.Services.Payment
 
         public async Task<CustomerSubscriptionResult> GetSubscriptions(string customerId)
         {
-            var result = new CustomerSubscriptionModel { CustomerId = customerId, Subscriptions = new List<string>() };
+            var result = new CustomerSubscriptionModel { CustomerId = customerId, Subscriptions = new List<SubscriptionModel>() };
 
             var options = new SubscriptionListOptions { Customer = customerId };
             var service = new SubscriptionService();
             var subscriptions = await service.ListAsync(options);
 
             foreach (var subscription in subscriptions)
-                result.Subscriptions.Add(subscription.Id);
+            {
+                var item = subscription.Items.First();
+
+                result.Subscriptions.Add(new SubscriptionModel
+                {
+                    SubscriptionId = subscription.Id,
+                    Canceled = subscription.CancelAt.HasValue,
+                    Quantity = item.Quantity,
+                    PriceId = item.Price.Id,
+                    Price = (decimal)(item.Price.UnitAmount ?? 0) / 100
+                });
+            }
 
             return new CustomerSubscriptionResult
             {

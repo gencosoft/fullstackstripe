@@ -15,6 +15,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatTableModule} from '@angular/material/table';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CustomPaymentComponent } from './custom-payment/custom-payment.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { SuccessComponent } from './prebuild-checkout/success/success.component';
@@ -73,6 +77,10 @@ export function tokenGetter() {
     MatButtonModule,
     MatInputModule,
     MatMenuModule,
+    MatChipsModule,
+    MatTableModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

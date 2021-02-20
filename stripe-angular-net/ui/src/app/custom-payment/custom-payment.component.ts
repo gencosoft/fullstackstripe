@@ -12,7 +12,8 @@ import { StripeDataService } from '../services/stripe-data.service';
   styleUrls: ['./custom-payment.component.css']
 })
 export class CustomPaymentComponent implements OnInit, OnDestroy {
-
+  
+  loading: boolean;
   quantity: number;
   cost: number;
   email: string;
@@ -44,6 +45,7 @@ export class CustomPaymentComponent implements OnInit, OnDestroy {
   }
 
   createToken() {
+    this.loading = true;
     this.stripeService
       .createToken(this.card, { name: this.name })
       .subscribe((result) => {
@@ -59,13 +61,16 @@ export class CustomPaymentComponent implements OnInit, OnDestroy {
           this.subscription = this.dataService
             .paymentFromToken(payment)
             .subscribe(x => {
+              this.loading = false;
               this.result = "Payment was successfully processed!";
             }, err => {
+              this.loading = false;
               this.result = "An error occured while trying to post the payment."
               console.log('error-token-create', err);
             });
         } else if (result.error) {
           // Error creating the token
+          this.loading = false;
           console.log(result.error.message);
         }
       });

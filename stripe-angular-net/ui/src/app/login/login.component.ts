@@ -15,6 +15,7 @@ const googleLogoURL = "https://raw.githubusercontent.com/fireflysemantics/logo/m
 export class LoginComponent{
 
   user:any = {};
+  loading: boolean;
   isUserAuthenticated: boolean;
 
   constructor(private _authService: AuthenticationService,
@@ -24,13 +25,17 @@ export class LoginComponent{
     }
 
   public externalLogin = () => {
+    this.loading = true;
     this._authService.signInWithGoogle()
     .then(res => {
       this.validateExternalAuth({
         provider: res.provider,
         idToken: res.idToken
       });
-    }, error => console.log('error-signin', error))
+    }, error => {
+      console.log('error-signin', error);
+      this.loading = false;
+    });
   }
 
   private validateExternalAuth(externalAuth: ExternalAuth) {
@@ -39,10 +44,12 @@ export class LoginComponent{
         localStorage.setItem("token", res.token);
         this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
         this.user = this._authService.getUser();
+        this.loading = false;
       },
       error => {
         console.log('validation-error', error);
         this._authService.signOutExternal();
+        this.loading = false;
       });
   }
 }

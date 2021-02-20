@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
+    "aws-push:prod": "aws s3 sync dist/stripe-angular s3://fullstackstripe-angular-net",
+    "build:prod": "npm run build && npm run aws-push:prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

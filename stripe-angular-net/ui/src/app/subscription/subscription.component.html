@@ -1,5 +1,6 @@
 <div *ngIf="isUserAuthenticated; else elseBlock">
     <app-user-subscriptions></app-user-subscriptions>
+    <mat-divider class=""></mat-divider>
     <app-subscription-options></app-subscription-options>
 </div>
 <ng-template #elseBlock>

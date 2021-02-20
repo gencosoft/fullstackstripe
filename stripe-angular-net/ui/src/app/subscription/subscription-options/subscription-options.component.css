@@ -1,5 +1,5 @@
 .selection{
-    width: 250px;
+    width: 300px;
     margin: 0 2rem;
 }
 
@@ -10,14 +10,6 @@
 
 .action-button{
     align-self: flex-end;
-}
-
-.primary{
-    color: #673ab7;
-}
-
-.large{
-    font-size: 150%;
 }
 
 .mat-card{

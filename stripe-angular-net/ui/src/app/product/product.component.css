@@ -7,14 +7,11 @@
     height: 22rem;
 }
 
-.primary{
-    color: #3F51B5;
+.spinner-margin{
+    margin: 5px 0 0 10px;
 }
 
-.large{
-    font-size: 150%;
-}
-
-.center{
-    padding: 0 112px;
+.shop-icon{
+    margin-left: 5px;
+    margin-top: 5px;
 }

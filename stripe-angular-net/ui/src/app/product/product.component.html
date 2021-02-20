@@ -1,20 +1,28 @@
 
-<div fxLayout="row" fxLayoutAlign="space-between start" >
+<div fxLayout="row" fxLayoutAlign="space-between start">
   <div>
     <mat-card class="example-card">
       <img mat-card-image [src]="product.ProductImageUrl" [alt]="product.ProductName">
       <mat-card-content>
-        <h5 class="large primary"><b>{{product.ProductName}}</b></h5>
-        <h5 class="large primary"><b>Total Price: {{product.Amount * product.Quantity | currency}}</b></h5>
+        <h1 class="large primary"><b>{{product.ProductName}}</b></h1>
+        <h2 class="large primary"><b>Total Price: {{product.Amount * product.Quantity | currency}}</b></h2>
         <div class="primary">{{product.ProductDescription}}</div>
         <div class="primary">Amount: ${{product.Amount}}</div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="remove()">-</button>
-        <span class="center"><b>{{product.Quantity}}</b></span>
-        <button mat-raised-button color="primary" (click)="add()">+</button>
+        <div fxLayout="row" fxLayoutAlign="space-between start">
+          <button mat-raised-button color="primary" (click)="remove()">-</button>
+          <span><b>{{product.Quantity}}</b></span>
+          <button mat-raised-button color="primary" (click)="add()">+</button>
+        </div>
       </mat-card-actions>
     </mat-card>
-    <button id="checkout-button" mat-raised-button color="primary" class="example-card" [disabled]="product.Quantity==0" (click)="proceed()">PROCEED TO CHECKOUT</button>
+    <button id="checkout-button" mat-raised-button color="primary" class="example-card" [disabled]="product.Quantity==0" (click)="proceed()">
+      <div fxLayout="row" fxLayoutAlign="center start">
+        <div>PROCEED TO CHECKOUT </div>
+        <mat-icon class="shop-icon">shopping_cart</mat-icon>
+        <mat-spinner *ngIf="loading" class="spinner-margin" color="accent" diameter="25"></mat-spinner>
+      </div>
+    </button>
   </div>
 </div>

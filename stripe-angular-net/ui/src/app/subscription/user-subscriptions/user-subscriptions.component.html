@@ -1,7 +1,30 @@
-<h2>Subscriptions:</h2>
-<div *ngFor="let subscription of customerSubscription?.subscriptions">
-    {{subscription}}
-</div><br>
-<div class="col">
-    <button mat-raised-button color="primary" (click)="manageSubscription()">Manage Subscription</button>
+<div *ngIf="customerSubscription?.subscriptions">
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-between start">
+        <h1 class="primary"><b>Subscriptions</b></h1>
+        <button mat-raised-button color="accent" (click)="manageSubscription()">Manage Subscription</button>
+    </div>
+    <table mat-table [dataSource]="customerSubscription?.subscriptions" class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Product Name</th>
+            <td mat-cell *matCellDef="let element">{{getProductNameFromPriceId(element.priceId)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Price</th>
+            <td mat-cell *matCellDef="let element">{{element.price | currency}}</td>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
+        </ng-container>
+        <ng-container matColumnDef="canceled">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <mat-chip-list>
+                    <mat-chip color="warn" selected  *ngIf="element.canceled">Canceled</mat-chip>
+                </mat-chip-list>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 </div>

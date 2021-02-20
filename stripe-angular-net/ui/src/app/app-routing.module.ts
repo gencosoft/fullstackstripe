@@ -12,9 +12,9 @@ import { SubscribeSuccessComponent } from './subscription/subscribe-success/subs
 import { SubscriptionComponent } from './subscription/subscription.component';
 
 const routes: Routes = [
-  { path: '', component: CustomFlowComponent},
-  { path: 'custom-flow', component: CustomFlowComponent},
+  { path: '', component: PrebuildCheckoutComponent},
   { path: 'prebuild-checkout', component: PrebuildCheckoutComponent},
+  { path: 'custom-flow', component: CustomFlowComponent},
   { path: 'prebuild-checkout/success', component: SuccessComponent},
   { path: 'prebuild-checkout/cancel', component: CancelComponent},
   { path: 'custom-payment', component: CustomPaymentComponent},
