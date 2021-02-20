@@ -1,43 +1,33 @@
 <template>
-  <v-container fill-height fluid>
-    <v-row align="center" justify="center">
-      <v-col>
-        <v-btn depressed color="error" x-large @click="socialLogin()">
-          Sign In with Google
-        </v-btn>
-      </v-col>
-    </v-row>
+  <v-container>
+    <v-btn color="error" x-large @click="socialLogin()">
+      <v-icon>mdi-login</v-icon>
+      <span class="mr-2">Google Sign-In</span>
+    </v-btn>
   </v-container>
 </template>
 
 <script>
 import firebase from "firebase";
+import "firebase/auth";
 export default {
   methods: {
-    socialLogin() {
+    async socialLogin() {
       var provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope("profile");
       provider.addScope("email");
       // Localizing the provider's OAuth flow to the user's preferred language
       firebase.auth().useDeviceLanguage();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-          console.log("social login success : " + result);
-
-          // This gives us a Google Access Token.
-          var token = result.credential.accessToken;
-          console.log("access token : " + token);
-
-          // The signed-in user info.
-          var user = result.user;
-          console.log("signed-in user : " + JSON.stringify(user));
-        })
-        .catch((error) => {
-          // Handle Errors here.
-          console.log("social login failed : " + error.message);
-        });
+      try {
+        const result = await firebase.auth().signInWithPopup(provider);
+        // This gives us a Google Access Token.
+        var token = result.credential.accessToken;
+        console.log("access token : " + token);
+        localStorage.setItem("accessToken", token);
+      } catch (error) {
+        // Handle Errors here.
+        console.log("social login failed : " + error.message);
+      }
     },
   },
 };

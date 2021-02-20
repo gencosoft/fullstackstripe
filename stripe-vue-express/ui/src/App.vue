@@ -18,6 +18,17 @@
           <span class="mr-2">Stripe Dashboard</span>
           <v-icon>mdi-open-in-new</v-icon>
         </v-btn>
+
+        <v-spacer></v-spacer>
+
+        <v-btn class="ma-2" v-if="isSignedIn" text>
+          <span class="mr-2">{{ user.displayName }}</span></v-btn
+        >
+
+        <v-btn v-if="isSignedIn" class="ma-2" @click="signOut()" color="error">
+          <span class="mr-2">Sign Out</span>
+          <v-icon>mdi-logout</v-icon>
+        </v-btn>
       </v-row>
     </v-app-bar>
 
@@ -32,16 +43,41 @@
 </template>
 
 <script>
+import firebase from "firebase";
+import "firebase/auth";
 export default {
   name: "App",
 
   data: () => ({
-    //
+    isSignedIn: false,
+    user: null,
     hideOnLeave: true,
   }),
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log("Auth state Changed. User signed in.");
+        this.isSignedIn = true;
+        this.user = user;
+      } else {
+        console.log("Auth state Changed. User signed out.");
+        this.isSignedIn = false;
+        this.user = null;
+      }
+    });
+  },
   methods: {
     openDashboard() {
       window.open("https://dashboard.stripe.com/");
+    },
+    openProfile() {},
+    async signOut() {
+      try {
+        await firebase.auth().signOut();
+      } catch (error) {
+        // Handle Errors here.
+        console.log("signout failed : " + error.message);
+      }
     },
   },
 };
