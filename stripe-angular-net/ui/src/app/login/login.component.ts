@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ExternalAuth } from '../models/external-auth';
 import { AuthenticationService } from '../services/authentication.service';
+
+const googleLogoURL = "https://raw.githubusercontent.com/fireflysemantics/logo/master/Google.svg";
+
 
 @Component({
   selector: 'app-login',
@@ -12,7 +17,11 @@ export class LoginComponent{
   user:any = {};
   isUserAuthenticated: boolean;
 
-  constructor(private _authService: AuthenticationService) { }
+  constructor(private _authService: AuthenticationService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer) { 
+      this.matIconRegistry.addSvgIcon("logo", this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
+    }
 
   public externalLogin = () => {
     this._authService.signInWithGoogle()
