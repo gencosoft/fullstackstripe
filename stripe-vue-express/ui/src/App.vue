@@ -18,7 +18,12 @@
 
         <v-btn class="ma-2" v-if="isSignedIn" text>
           <span class="mr-2">
-            <v-img max-width="60" v-if="isSignedIn" :src="user.photoURL"></v-img
+            <v-avatar size="48">
+              <v-img
+                max-width="60"
+                v-if="isSignedIn"
+                :src="user.photoURL"
+              ></v-img></v-avatar
           ></span>
           <span class="mr-2"> {{ user.displayName }}</span></v-btn
         >
