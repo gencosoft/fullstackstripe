@@ -14,18 +14,26 @@
           <span class="mr-2">Subscription</span>
         </v-btn>
 
+        <v-spacer></v-spacer>
+
+        <v-btn class="ma-2" v-if="isSignedIn" text>
+          <span class="mr-2">
+            <v-img max-width="60" v-if="isSignedIn" :src="user.photoURL"></v-img
+          ></span>
+          <span class="mr-2"> {{ user.displayName }}</span></v-btn
+        >
+
         <v-btn class="ma-2" color="accent darken-2" @click="openDashboard">
           <span class="mr-2">Stripe Dashboard</span>
           <v-icon>mdi-open-in-new</v-icon>
         </v-btn>
 
-        <v-spacer></v-spacer>
-
-        <v-btn class="ma-2" v-if="isSignedIn" text>
-          <span class="mr-2">{{ user.displayName }}</span></v-btn
+        <v-btn
+          v-if="isSignedIn"
+          class="ma-2"
+          @click="signOut()"
+          color="accent darken-2"
         >
-
-        <v-btn v-if="isSignedIn" class="ma-2" @click="signOut()" color="error">
           <span class="mr-2">Sign Out</span>
           <v-icon>mdi-logout</v-icon>
         </v-btn>
