@@ -1,59 +1,61 @@
 <template>
-  <v-container>
-    <v-card elevation="8" max-width="400" class="mx-auto">
-      <v-img max-width="400" :src="product.image"> </v-img>
-      <v-card-title style="color: teal">
-        {{ product.name }}
-        <br />
-        Total Price : ${{ product.amount * product.quantity }}
-      </v-card-title>
-      <v-card-subtitle style="color: teal">
-        {{ product.desc }}
-        <v-spacer> Single Item Price : ${{ product.amount }} </v-spacer>
-      </v-card-subtitle>
-      <v-card-text>
-        <v-row align="center" justify="center">
-          <v-col cols="12" sm="4"
-            ><v-btn
-              class="white--text"
-              :disabled="product.quantity === 0"
-              elevation="4"
-              color="teal darken-1"
-              @click="decrementQuantity()"
-            >
-              <v-icon dark> mdi-minus </v-icon>
-            </v-btn></v-col
-          ><v-col cols="12" sm="4">
-            <h3 style="color: teal">{{ product.quantity }}</h3></v-col
+  <v-card elevation="8">
+    <v-img max-width="400" :src="product.image"> </v-img>
+    <v-card-title style="color: teal">
+      {{ product.name }}
+    </v-card-title>
+    <v-card-subtitle style="color: teal">
+      {{ product.desc }}
+      <v-spacer> Single Item Price : ${{ product.amount }} </v-spacer>
+      <br />
+    </v-card-subtitle>
+    <v-card-text class="text-center">
+      <h2 class="accent--text text--darken-2">
+        Total Cost : ${{ product.amount * product.quantity }}
+      </h2>
+      <br />
+      <v-row align="center" justify="center">
+        <v-col cols="12" sm="4"
+          ><v-btn
+            class="white--text"
+            :disabled="product.quantity === 0"
+            elevation="4"
+            color="teal darken-1"
+            @click="decrementQuantity()"
           >
-          <v-col cols="12" sm="4">
-            <v-btn
-              elevation="4"
-              class="white--text"
-              color="teal darken-1"
-              @click="incrementQuantity()"
-            >
-              <v-icon dark> mdi-plus </v-icon>
-            </v-btn></v-col
-          >
-        </v-row>
-      </v-card-text>
-
-      <v-card-actions>
-        <v-btn
-          elevation="8"
-          class="white--text"
-          :disabled="product.quantity === 0"
-          :loading="loading"
-          x-large
-          block
-          color="teal darken-1"
-          @click="handleCheckout"
-          >Proceed to Checkout <v-icon> mdi-cart-arrow-right </v-icon></v-btn
+            <v-icon dark> mdi-minus </v-icon>
+          </v-btn></v-col
+        ><v-col cols="12" sm="4">
+          <h3 class="color: teal--text text--darken-2">
+            {{ product.quantity }}
+          </h3></v-col
         >
-      </v-card-actions>
-    </v-card>
-  </v-container>
+        <v-col cols="12" sm="4">
+          <v-btn
+            elevation="4"
+            class="white--text"
+            color="teal darken-1"
+            @click="incrementQuantity()"
+          >
+            <v-icon dark> mdi-plus </v-icon>
+          </v-btn></v-col
+        >
+      </v-row>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-btn
+        elevation="8"
+        class="white--text"
+        block
+        :disabled="product.quantity === 0"
+        :loading="loading"
+        color="teal darken-1"
+        @click="handleCheckout"
+        >Proceed to Checkout <v-icon> mdi-cart-arrow-right </v-icon></v-btn
+      >
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>

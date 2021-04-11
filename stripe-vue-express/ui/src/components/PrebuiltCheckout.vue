@@ -1,17 +1,15 @@
 <template>
   <v-container fill-height fluid>
     <v-row align="center" justify="center">
-      <v-col
-        ><Product
-          @quantityChanged="quantityChanged"
-          @handleCheckout="handleCheckout"
-          :isLoading="isLoading"
-          productName="Apple Iphone"
-          productDesc="11 iPhone Green Mint"
-          productPrice="400"
-          productImage="https://images.unsplash.com/photo-1592910147752-5e0bc5f04715?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit"
-        ></Product
-      ></v-col>
+      <Product
+        @quantityChanged="quantityChanged"
+        @handleCheckout="handleCheckout"
+        :isLoading="isLoading"
+        productName="Apple Iphone"
+        productDesc="11 iPhone Green Mint"
+        productPrice="400"
+        productImage="https://images.unsplash.com/photo-1592910147752-5e0bc5f04715?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxfDB8MXxhbGx8fHx8fHx8fA&ixlib=rb-1.2.1&q=80&w=1080&utm_source=unsplash_source&utm_medium=referral&utm_campaign=api-credit"
+      ></Product>
     </v-row>
   </v-container>
 </template>
@@ -46,7 +44,6 @@ export default {
       this.product = data;
     },
     async handleCheckout() {
-      // TODO : use .env variables for domain urls
       try {
         this.isLoading = true;
         const paymentSession = await this.axios.post(
