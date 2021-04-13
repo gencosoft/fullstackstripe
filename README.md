@@ -1,17 +1,19 @@
 # About this project
 
-Full-Stack web application demos showing the most popular [Stripe](https://stripe.com/docs/payments) payment flows such as Accepting Online Payments and Creating & Managing Subscriptions.
+Full-Stack web application demos showing the usage of [Stripe API](https://stripe.com/docs/api).
+<br/>
+We implemented some of the popular payment flows such as [Accepting Online Payments and Creating & Managing Subscriptions](https://stripe.com/docs/payments).
 <br/>
 We used Vue and Angular for the frontend since there is already a good amount of resources that uses React and pure JavaScript.
 
 
 ## Stripe-Angular-.Net Tech Stack
 
-### UI
+### Frontend - UI
 
-### API
+### Backend - API
 
-### SERVER
+### Servers
 
 
 
