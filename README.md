@@ -1,4 +1,4 @@
-## A Repository for Full-Stack web application demos showing the usage of Stripe API.
+A Repository for Full-Stack web application demos showing the usage of Stripe API.
 <br/>
 We implemented some of the popular payment flows such as [Accepting Online Payments and Creating & Managing Subscriptions](https://stripe.com/docs/payments).
 <br/>
