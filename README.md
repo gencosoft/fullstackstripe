@@ -15,27 +15,26 @@ Coming...
 #### Frontend - UI
 Angular 10 using [Angular Materials](https://material.angular.io/components/categories),
 <br/>
+Hosted on [AWS S3](https://aws.amazon.com/s3/) as a Single Page Application
+<br/>
 #### Backend - API
-.Net Core 3.1, 
+.Net Core 3.1
 <br/>
-#### Servers
-UI is hosted on [AWS S3](https://aws.amazon.com/s3/) as a Single Page Application
+Running on [Microsoft Azure Portal](https://azure.microsoft.com/en-us/features/azure-portal/)
 <br/>
-API is running on [Microsoft Azure Portal](https://azure.microsoft.com/en-us/features/azure-portal/)
-
 
 ## Stripe-Vue-Express Tech Stack
 
 #### Frontend - UI
-Vue.js with [Vuetify](https://vuetifyjs.com/) Material Design Framework,
+Vue.js with [Vuetify](https://vuetifyjs.com/) Material Design Framework
+<br/>
+Hosted on [Netlify](https://www.netlify.com/) as a Static Web Application
 <br/>
 #### Backend - API
-Node.js with Express Framework, 
+Node.js with Express Framework
 <br/>
-#### Servers
-UI is hosted on [Netlify](https://www.netlify.com/) as a Static Web Application
+Running on [Google Cloud-Run](https://cloud.google.com/run) as a Fully Managed Serverless Container
 <br/>
-API is running on [Google Cloud-Run](https://cloud.google.com/run) as a Fully Managed Serverless Container
 
 ## Author(s)
 * [@0014](https://github.com/0014)
