@@ -21,7 +21,7 @@ ENV NODE_ENV=PROD
 ENV PORT=8080
 ENV STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET_KEY
 ENV STRIPE_PUBLIC_KEY=YOUR_STRIPE_PUBLIC_KEY
-ENV UI_HOST=https://fullstackstripe-vue-express.netlify.app
+ENV UI_HOST=YOUR_UI_WEB_SITE_HOST
 
 # Run the web service on container startup.
 CMD [ "npm", "start" ]
