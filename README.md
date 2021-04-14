@@ -21,7 +21,7 @@ Angular 10 using [Angular Materials](https://material.angular.io/components/cate
 #### Servers
 UI is hosted on [AWS S3](https://aws.amazon.com/s3/) as a Single Page Application
 <br/>
-API is running on [Azure Portal](https://azure.microsoft.com/en-us/features/azure-portal/)
+API is running on [Microsoft Azure Portal](https://azure.microsoft.com/en-us/features/azure-portal/)
 
 
 ## Stripe-Vue-Express Tech Stack
