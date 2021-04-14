@@ -1,9 +1,14 @@
+## fullstackstripe
+
 A Repository for Full-Stack web application demos showing the usage of Stripe API.
 <br/>
 We implemented some of the popular payment flows such as [Accepting Online Payments and Creating & Managing Subscriptions](https://stripe.com/docs/payments).
 <br/>
 We used Vue and Angular for the frontend since there is already a good amount of resources that uses React and pure JavaScript.
 
+
+## Prerequisites and Installation
+Coming...
 
 ## Stripe-Angular-.Net Tech Stack
 
@@ -32,7 +37,9 @@ UI is hosted on [Netlify](https://www.netlify.com/) as a Static Web Application
 <br/>
 API is running on [Google Cloud-Run](https://cloud.google.com/run) as a Fully Managed Serverless Container
 
-
+## Author(s)
+* [@0014](https://github.com/0014)
+* [@mrgenco](https://github.com/mrgenco)
 
 ## Check out live demos
 
