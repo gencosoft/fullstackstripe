@@ -1,43 +1,32 @@
-# About this project
-
-Full-Stack web application demos showing the usage of [Stripe API](https://stripe.com/docs/api).
-<br/>
-We implemented some of the popular payment flows such as [Accepting Online Payments and Creating & Managing Subscriptions](https://stripe.com/docs/payments).
-<br/>
+A Repository for Full-Stack web application demos showing the usage of Stripe API.
+We implemented some of the popular payment flows such as Accepting Online Payments and Creating & Managing Subscriptions.
 We used Vue and Angular for the frontend since there is already a good amount of resources that uses React and pure JavaScript.
 
+Stripe-Angular-.Net Tech Stack
+Frontend - UI
+Angular 10 using Angular Materials,
 
-## Stripe-Angular-.Net Tech Stack
+Backend - API
+.Net Core 3.1,
 
-### Frontend - UI
+Servers
+UI is hosted on AWS S3 as a Single Page Application
+API is running on Azure Portal
 
-### Backend - API
+Stripe-Vue-Express Tech Stack
+Frontend - UI
+Vue.js with Vuetify Material Design Framework,
 
-### Servers
+Backend - API
+Node.js with Express Framework,
 
+Servers
+UI is hosted on Netlify as a Static Web Application
+API is running on Google Cloud-Run as a Fully Managed Serverless Container
 
-
-## Stripe-Vue-Express Tech Stack
-
-### Frontend - UI
-Vue.js with [Vuetify](https://vuetifyjs.com/) Material Design Framework,
-<br/>
-### Backend - API
-Node.js with Express Framework, 
-<br/>
-### Servers
-UI is hosted on [Netlify](https://www.netlify.com/) as a Single Page Application
-<br/>
-API is running on [Google Cloud-Run](https://cloud.google.com/run) as a Fully Managed Serverless Container
-
-
-
-## Check out live demos
-
-Don't worry, we use Stripe test mode in the demos. 
-<br/>
+Check out live demos
+Don't worry, we use Stripe test mode in the demos.
 So feel free to submit mock payments to the server :)
 
-[Stripe / Vue / Express Live Demo](https://fullstackstripe-vue-express.netlify.app/)
-<br/>
-[Stripe / Angular / .Net Live Demo](http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/)
+Stripe / Vue / Express Live Demo
+Stripe / Angular / .Net Live Demo
