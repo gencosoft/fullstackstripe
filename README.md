@@ -4,11 +4,23 @@ A Repository for Full-Stack web application demos showing the usage of Stripe AP
 <br/>
 We implemented some of the popular payment flows such as [Accepting Online Payments, Creating & Managing Subscriptions](https://stripe.com/docs/payments).
 <br/>
-We used Vue and Angular for the frontend since there is already a good amount of resources that uses React and pure JavaScript.
+We used Vue and Angular for the UI since there is already a good amount of resources with React and pure JS.
+
+## Preview of Demos
+![Preview of Demo](https://github.com/gencosoft/fullstackstripe/blob/main/stripe-vue-express/ui/src/assets/preview.PNG?raw=true)
+![Preview2 of Demo](https://github.com/gencosoft/fullstackstripe/blob/main/stripe-vue-express/ui/src/assets/preview-2.PNG?raw=true)
 
 
-## Prerequisites and Installation
-Coming...
+## Check out live demos
+
+Don't worry, we use Stripe test mode in the demos. 
+<br/>
+So feel free to submit mock payments to the server :)
+
+[Stripe / Vue / Express Live Demo](https://fullstackstripe-vue-express.netlify.app/)
+<br/>
+[Stripe / Angular / .Net Live Demo](http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/)
+
 
 ## Stripe-Angular-.Net Tech Stack
 
@@ -40,12 +52,3 @@ Running on [Google Cloud-Run](https://cloud.google.com/run) as a Fully Managed S
 * [@0014](https://github.com/0014)
 * [@mrgenco](https://github.com/mrgenco)
 
-## Check out live demos
-
-Don't worry, we use Stripe test mode in the demos. 
-<br/>
-So feel free to submit mock payments to the server :)
-
-[Stripe / Vue / Express Live Demo](https://fullstackstripe-vue-express.netlify.app/)
-<br/>
-[Stripe / Angular / .Net Live Demo](http://fullstackstripe-angular-net.s3-website-us-east-1.amazonaws.com/)
